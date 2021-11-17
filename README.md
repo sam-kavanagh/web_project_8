@@ -1,16 +1,11 @@
 # Project 4: Around The U.S.
 
-### Overview
+In this project I developed my first interactive webpage, showcasing different states in the U.S.
 
-* Figma
-* Images
+In the project I used Javascript for the first time,consisting of; querySelection, functions and and if statement.This allows you to add and amend your profile details; name and description below the header of the page. Followed by a grid of images applied using previous skills learnt such as flexbox and positioning and responsive web design.
 
-**Figma**
+By Sam Kavanagh
 
-* [Link to the project in Figma](https://www.figma.com/file/SurN1jaeEQIhuZEDMhmWWf/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+Link to page:
+Hope you like it!
 
-**Images**
-
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-
-Have fun with JavaScript!
