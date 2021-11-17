@@ -6,6 +6,7 @@ In the project I used Javascript for the first time,consisting of; querySelectio
 
 By Sam Kavanagh
 
-Link to page:
+Link to page: https://sam-kavanagh.github.io/web_project_4/
+
 Hope you like it!
 
