@@ -1,6 +1,8 @@
 .profile__info {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas:
+        "name edit-button"
+        "description description";
 }
 
 @media screen and (max-width: 910px) {
@@ -11,9 +13,8 @@
 
  @media screen and (max-width: 730px) {
     .profile__info  {
-        position: relative;
-        width: 282px;
         height: 50px;
         margin:26.25px 0 0 0;
+        justify-content: center;
     }
 }

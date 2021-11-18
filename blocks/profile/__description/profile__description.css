@@ -3,16 +3,13 @@
     font-size: 18px;
     line-height: 22px;
     margin: 16px 0 0 0;
-    font-family: Inter;
     font-style: normal;
     font-weight: normal;
+    grid-area: description;
 }
 
 @media screen and (max-width: 730px) {
     .profile__description {
-        font-family: Inter;
-        font-style: normal;
-        font-weight: normal;
         font-size: 14px;
         line-height: 17px;
         text-align: center;
