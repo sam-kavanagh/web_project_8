@@ -19,10 +19,6 @@
     .profile__edit-button {
         width: 18px;
         height: 18px;
-        margin: 0;
-        position: absolute;
-        top: 150px;
-        right: 30px;
-
+        margin: 0 0 0 10px;
     }
 }
