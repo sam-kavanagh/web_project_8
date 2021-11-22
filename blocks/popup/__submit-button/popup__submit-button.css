@@ -1,5 +1,6 @@
 .popup__submit-button {
     background: #000000;
+    background-image: url(../../../images/Line\ 2.svg);
     width: 358px;
     height: 50px;
     margin: 48px 0 0 0;
@@ -14,6 +15,7 @@
 
 .popup__submit-button:hover {
     opacity:0.8;
+    cursor: pointer;
 }
 
 

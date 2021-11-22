@@ -3,24 +3,25 @@
     position: absolute;
     top: -35px;
     right: -35px;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     background-color: transparent;
     padding: 0;
     background-image: url(../../../images/Close\ Icon.svg);
     background-position: center;
     border: none;
+    background-size: contain;
 }
 
-.button_close:hover{
+.popup__close-button:hover{
     opacity: 0.6;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {
     .popup__close-button {
-        background-size: contain;
-        width: 22px;
-        height: 22px;
+        width: 26px;
+        height: 26px;
         top: -38px;
         right: 0;
     }

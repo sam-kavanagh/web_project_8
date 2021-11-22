@@ -1,4 +1,8 @@
 .footer__copyright {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
     color: rgb(84, 84, 84);
     margin: 68px 0px 60px;
 }
@@ -8,9 +12,12 @@
         margin: 0px;
     }
 }
+
 @media screen and (max-width: 730px) {
     .footer__copyright {
         width: 282px;
-        height: 14px;
+        font-family: Inter;
+        font-size: 14px;
+        line-height: 17px;
     }
 }

@@ -9,7 +9,6 @@
 
  @media screen and (max-width: 910px) {
     .profile {
-        margin: 0;
         width: 587px;
     }
 }
@@ -19,7 +18,6 @@
         display: block;
         margin: 38.25px 0 0 0;
         width: 282px;
-        height: 286px;
         padding: 0;
     }
 }

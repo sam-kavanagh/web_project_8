@@ -16,6 +16,10 @@
 @media screen and (max-width: 600px) {
     .popup__input {
         width: 100%;
-        margin: 0;
+        margin: 39px 0 0 0;
+    }
+
+    .popup__input:first-child {
+        margin-top: 76px;
     }
 }
