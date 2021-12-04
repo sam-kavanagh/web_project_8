@@ -1,8 +1,6 @@
 //declaring
 const editProfileButton = document.querySelector("#edit-Profile-Button");
 const editCloseButton = document.querySelector(".popup__close-button");
-const popup = document.querySelector("#edit-Profile-Popup");
-//Profile popup form input - defualt values
 const editCardName = document.querySelector("#edit-card-name");
 const editCardDescription = document.querySelector("#edit-card-description");
 
