@@ -169,12 +169,10 @@ addProfilePopupForm.addEventListener("submit", (e) => {
 //Like-button handler
 LikeButton.addEventListener("click", function () {
   LikeButton.classList.toggle("element__like-button_full");
-  console.log(LikeButton);
 });
 
 //Trash-button handler
 TrashButton.addEventListener("click", () => {
   const removeCard = TrashButton.closest(".element");
   removeCard.remove();
-  console.log(TrashButton);
 });
