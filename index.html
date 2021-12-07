@@ -12,17 +12,6 @@
             <img src="images/logo.svg" alt="logo" class="header__logo" />
         </header>
         <main>
-            <section class="popup" id="edit-Profile-Popup">
-                <div class="popup__container">
-                    <button type="button" class="popup__close-button"></button>
-                    <h2 class="popup__title">Edit Profile</h2>
-                    <form name="form" class="popup__form" id="edit-Popup-form">
-                        <input name="Name" type="text" placeholder="Sam" class="popup__input" id="edit-form-input-name" />
-                        <input name="Description" type="text" placeholder="Explorer" class="popup__input" id="edit-form-input-description" />
-                        <button type="submit" class="popup__submit-button" id="edit-submit-button">Save</button>
-                    </form>
-                </div>
-            </section>
             <section class="profile">
                 <div class="profile__container">
                     <div class="profile__avatar">
@@ -36,54 +25,50 @@
                 </div>
                 <button type="button" class="profile__add-button"></button>
             </section>
-            <section class="elements">
-                <article class="element">
-                    <img class="element__image" src="images/ethan-chang-ebyqmad5L60-unsplash.jpg" alt="San Francisco" />
-                    <div class="element__card">
-                        <h2 class="element__title">San Francisco</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="images/ivan-karpov-7oLuzIZ3QIg-unsplash (1).jpg" alt="Los Angeles" />
-                    <div class="element__card">
-                        <h2 class="element__title">Los Angeles</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="images/cody-board-quuG8oNM61A-unsplash.jpg" alt="Palm Springs" />
-                    <div class="element__card">
-                        <h2 class="element__title">Palm Springs</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="images/alan-carrillo-HIghIy9i0aY-unsplash (1).jpg" alt="Grand Canyon" />
-                    <div class="element__card">
-                        <h2 class="element__title">Grand Canyon</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="images/hans-isaacson-MUVL-tjI1U4-unsplash.jpg" alt="Las Vegas" />
-                    <div class="element__card">
-                        <h2 class="element__title">Las Vegas</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </article>
-                <article class="element">
-                    <img class="element__image" src="images/kirill-pershin-1556355-unsplash (1).png" alt="Vanoise Nationa..." />
-                    <div class="element__card">
-                        <h2 class="element__title">Vanoise Nationa...</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </article>
-            </section>
+            <section class="elements"></section>
         </main>
         <footer class="footer">
             <p class="footer__copyright">© 2021 Around The U.S.</p>
         </footer>
+        <div class="popup" id="edit-profile-popup">
+            <div class="popup__container">
+                <button type="button" class="popup__close-button"></button>
+                <h3 class="popup__title">Edit Profile</h3>
+                <form name="form" class="popup__form" id="edit-profile-form">
+                    <input name="Name" type="text" placeholder="Sam" class="popup__input" id="edit-form-input-name" />
+                    <input name="Description" type="text" placeholder="Explorer" class="popup__input" id="edit-form-input-description" />
+                    <button type="submit" class="popup__submit-button" id="edit-submit-button">Save</button>
+                </form>
+            </div>
+        </div>
+        <div class="popup" id="add-profile-popup">
+            <div class="popup__container">
+                <button type="button" class="popup__close-button"></button>
+                <h3 class="popup__title">New place</h3>
+                <form name="form" class="popup__form" id="new-card-form">
+                    <input name="title" type="text" placeholder="Title" class="popup__input" id="add-form-input-title" />
+                    <input name="link" type="text" placeholder="Image Link" class="popup__input" id="add-form-input-link" />
+                    <button type="submit" class="popup__submit-button" id="add-submit-button">Create</button>
+                </form>
+            </div>
+        </div>
+        <div class="popup" id="popup-preview">
+            <div class="popup__container popup__container_type_preview">
+                <button type="button" class="popup__close-button"></button>
+                <img class="popup__preview-image" src="" alt="" />
+                <p class="popup__caption"></p>
+            </div>
+        </div>
+        <template id="card-template">
+            <article class="element">
+                <button type="button" class="element__trash-button"></button>
+                <img class="element__image" src="" alt="" />
+                <div class="element__card">
+                    <h2 class="element__title"></h2>
+                    <button type="button" class="element__like-button"></button>
+                </div>
+            </article>
+        </template>
         <script src="scripts/index.js" type="text/javascript"></script>
     </body>
 </html>
