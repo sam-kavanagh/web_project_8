@@ -68,8 +68,8 @@ function createCard(data) {
  const TrashButton = card.querySelector(".element__trash-button");
 
   //Like-button handler
-  LikeButton.addEventListener("click", function () {
-      LikeButton.classList.toggle("element__like-button_full");
+  LikeButton.addEventListener("click", () => {
+    LikeButton.classList.toggle("element__like-button_full");
   });
 
   //Trash-button handler
@@ -164,15 +164,4 @@ addProfilePopupForm.addEventListener("submit", (e) => {
   renderCard(newCard);
   addProfilePopupForm.reset();
   closePopUp(addPopup);
-});
-
-//Like-button handler
-LikeButton.addEventListener("click", function () {
-  LikeButton.classList.toggle("element__like-button_full");
-});
-
-//Trash-button handler
-TrashButton.addEventListener("click", () => {
-  const removeCard = TrashButton.closest(".element");
-  removeCard.remove();
 });
