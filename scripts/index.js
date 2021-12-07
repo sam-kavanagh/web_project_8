@@ -64,8 +64,8 @@ function createCard(data) {
   imageElement.src = data.link;
   titleElement.textContent = data.name;
 
-  LikeButton = card.querySelector(".element__like-button");
-  TrashButton = card.querySelector(".element__trash-button");
+ const LikeButton = card.querySelector(".element__like-button");
+ const TrashButton = card.querySelector(".element__trash-button");
 
   //Like-button handler
   LikeButton.addEventListener("click", function () {
