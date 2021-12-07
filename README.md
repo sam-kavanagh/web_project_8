@@ -1,8 +1,11 @@
-# Project 4: Around The U.S.
+# Project 5: Around The U.S.
+Around the U.S showcases different states in the U.S.
 
-In this project I developed my first interactive webpage, showcasing different states in the U.S.
+In this project I've built on project 4, further developing my interactive webpage. 
 
-In the project I used Javascript for the first time,consisting of; querySelection, functions and and if statement.This allows you to add and amend your profile details; name and description below the header of the page. Followed by a grid of images applied using previous skills learnt such as flexbox and positioning and responsive web design.
+New features such as the 'Add' pop-up have been implemented allowing users to add their favourite places to the images(via weblink) on display, and name them. Users can also now like like and delete places.
+
+Javascript forEach was used for the first time in this project to help with the addiiton of the cards to the page. Similarly to project 4, querySelection and functions were used.
 
 By Sam Kavanagh
 
