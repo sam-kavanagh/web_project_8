@@ -28,25 +28,25 @@ const initialCards = [
 /* -----------------------Wrappers---------------------------*/
 const cardTemplate = document.querySelector("#card-template");
 const cardList = document.querySelector(".elements");
-const editProfilePopUpForm = document.querySelector(".popup__form");
-const editProfilePopUp = document.querySelector("#edit-profile-popup");
-const addNewCardPopUp = document.querySelector("#add-profile-popup");
-const addProfilePopUpForm = addNewCardPopUp.querySelector("#new-card-form");
-const previewImagePopUp = document.querySelector("#popup-preview");
+const editProfilePopupForm = document.querySelector(".popup__form");
+const editProfilePopup = document.querySelector("#edit-profile-popup");
+const addNewCardPopup = document.querySelector("#add-profile-popup");
+const addProfilePopupForm = addNewCardPopup.querySelector("#new-card-form");
+const previewImagePopup = document.querySelector("#popup-preview");
 const previewImageElement = document.querySelector(".popup__preview-image");
 const previewImageCaption = document.querySelector(".popup__caption");
 const editCardName = document.querySelector("#edit-card-name");
 const editCardDescription = document.querySelector("#edit-card-description");
-const newCardSubmit = addNewCardPopUp.querySelector("#add-submit-button");
+const newCardSubmit = addNewCardPopup.querySelector("#add-submit-button");
 
 /* -------------------------Buttons------------------------------*/
 const editProfileButton = document.querySelector("#edit-Profile-Button");
-const popUpCloseButton = editProfilePopUp.querySelector(".popup__close-button");
-const addPopUpButton = document.querySelector(".profile__add-button");
-const addPopUpCloseButton = addNewCardPopUp.querySelector(
+const popupCloseButton = editProfilePopup.querySelector(".popup__close-button");
+const addPopupButton = document.querySelector(".profile__add-button");
+const addPopupCloseButton = addNewCardPopup.querySelector(
   ".popup__close-button"
 );
-const previewImageCloseButton = previewImagePopUp.querySelector(
+const previewImageCloseButton = previewImagePopup.querySelector(
   ".popup__close-button"
 );
 
@@ -89,7 +89,7 @@ function createCard(data) {
     previewImageElement.src = data.link;
     previewImageCaption.textContent = data.name;
     previewImageElement.alt = data.name;
-    openPopUp(previewImagePopUp);
+    openPopup(previewImagePopup);
   });
 
   return card;
@@ -108,66 +108,66 @@ initialCards.forEach((cardData) => {
   renderCard(cardData);
 });
 
-//----------PopUp Functions----------//
+//----------Popup Functions----------//
 
-//Open PopUp
-function openPopUp(popUp) {
-  popUp.classList.add("popup_open");
+//Open Popup
+function openPopup(popup) {
+  popup.classList.add("popup_open");
 }
 
 //Open openPropfilePopup
-function openPropfilePopup(editProfilePopUp) {
+function openPropfilePopup(editProfilePopup) {
   editFormInputName.value = editCardName.textContent;
   editFormInputDescription.value = editCardDescription.textContent;
 
-  editProfilePopUp.classList.add("popup_open");
+  editProfilePopup.classList.add("popup_open");
 }
 
-//Close PopUp
-function closePopUp(popUp) {
-  popUp.classList.remove("popup_open");
+//Close Popup
+function closePopup(popup) {
+  popup.classList.remove("popup_open");
 }
 /* -------------------------EventListeners------------------------------*/
 
 //Edit profile Open/close
 editProfileButton.addEventListener("click", () => {
-  openPropfilePopup(editProfilePopUp);
+  openPropfilePopup(editProfilePopup);
 });
 
-popUpCloseButton.addEventListener("click", () => {
-  closePopUp(editProfilePopUp);
+popupCloseButton.addEventListener("click", () => {
+  closePopup(editProfilePopup);
 });
 
 previewImageCloseButton.addEventListener("click", () => {
-  closePopUp(previewImagePopUp);
+  closePopup(previewImagePopup);
 });
 
 //Edit Profile form submit handler
-editProfilePopUpForm.addEventListener("submit", function (event) {
+editProfilePopupForm.addEventListener("submit", function (event) {
   event.preventDefault();
   editCardName.textContent = editFormInputName.value;
   editCardDescription.textContent = editFormInputDescription.value;
-  closePopUp(editProfilePopUp);
+  closePopup(editProfilePopup);
 });
 
 //profile add button open/close
-addPopUpCloseButton.addEventListener("click", () => {
-  closePopUp(addNewCardPopUp);
+addPopupCloseButton.addEventListener("click", () => {
+  closePopup(addNewCardPopup);
 });
 
-addPopUpButton.addEventListener("click", () => {
-  openPopUp(addNewCardPopUp);
+addPopupButton.addEventListener("click", () => {
+  openPopup(addNewCardPopup);
 });
 
 //Add Profile form submit handler
 
-addProfilePopUpForm.addEventListener("submit", (e) => {
+addProfilePopupForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const newCard = {
     name: addFormInputName.value,
     link: addFormInputLink.value,
   };
   renderCard(newCard);
-  addProfilePopUpForm.reset();
-  closePopUp(addNewCardPopUp);
+  addProfilePopupForm.reset();
+  closePopup(addNewCardPopup);
 });
