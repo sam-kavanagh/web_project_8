@@ -71,7 +71,7 @@ function createCard(data) {
   imageElement.alt = data.name;
 
   const likeButton = card.querySelector(".element__like-button");
-  const TrashButton = card.querySelector(".element__trash-button");
+  const trashButton = card.querySelector(".element__trash-button");
 
   //Like-button handler
   likeButton.addEventListener("click", () => {
@@ -79,8 +79,8 @@ function createCard(data) {
   });
 
   //Trash-button handler
-  TrashButton.addEventListener("click", () => {
-    const removeCard = TrashButton.closest(".element");
+  trashButton.addEventListener("click", () => {
+    const removeCard = trashButton.closest(".element");
     removeCard.remove();
   });
 
