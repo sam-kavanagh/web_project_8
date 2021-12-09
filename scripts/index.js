@@ -70,12 +70,12 @@ function createCard(data) {
   titleElement.textContent = data.name;
   imageElement.alt = data.name;
 
-  const LikeButton = card.querySelector(".element__like-button");
+  const likeButton = card.querySelector(".element__like-button");
   const TrashButton = card.querySelector(".element__trash-button");
 
   //Like-button handler
-  LikeButton.addEventListener("click", () => {
-    LikeButton.classList.toggle("element__like-button_full");
+  likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("element__like-button_full");
   });
 
   //Trash-button handler
@@ -111,8 +111,8 @@ initialCards.forEach((cardData) => {
 //----------PopUp Functions----------//
 
 //Open PopUp
-function openPopUp(PopUp) {
-  PopUp.classList.add("popup_open");
+function openPopUp(popUp) {
+  popUp.classList.add("popup_open");
 }
 
 //Open openPropfilePopup
@@ -124,8 +124,8 @@ function openPropfilePopup(editProfilePopUp) {
 }
 
 //Close PopUp
-function closePopUp(PopUp) {
-  PopUp.classList.remove("popup_open");
+function closePopUp(popUp) {
+  popUp.classList.remove("popup_open");
 }
 /* -------------------------EventListeners------------------------------*/
 
