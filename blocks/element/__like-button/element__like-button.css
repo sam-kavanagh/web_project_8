@@ -4,12 +4,13 @@
   height: 19px;
   box-sizing: border-box;
   background-color: transparent;
-  background-position: center center;
+  background-position: center;
   border-width: initial;
   border-style: none;
   border-color: initial;
   border-image: initial;
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .element__like-button:hover {
