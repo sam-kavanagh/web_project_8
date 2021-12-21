@@ -1,74 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Around The U.S.</title>
-        <link href="./pages/Index.css" rel="stylesheet" />
-    </head>
-    <body class="page">
-        <header class="header">
-            <img src="images/logo.svg" alt="logo" class="header__logo" />
-        </header>
-        <main>
-            <section class="profile">
-                <div class="profile__container">
-                    <div class="profile__avatar">
-                        <img src="images/profile pic.jpg" alt="profile picture of sam kavanagh mixed short haired wearing black puffer jacket inside with concrete background" class="profile__image" />
-                    </div>
-                    <div class="profile__info">
-                        <h2 class="profile__name" id="edit-card-name">Sam Kavanagh</h2>
-                        <p class="profile__description" id="edit-card-description">Explorer</p>
-                        <button type="button" id="edit-Profile-Button" class="profile__edit-button"></button>
-                    </div>
-                </div>
-                <button type="button" class="profile__add-button"></button>
-            </section>
-            <section class="elements"></section>
-        </main>
-        <footer class="footer">
-            <p class="footer__copyright">© 2021 Around The U.S.</p>
-        </footer>
-        <div class="popup" id="edit-profile-popup">
-            <div class="popup__container">
-                <button type="button" class="popup__close-button"></button>
-                <h3 class="popup__title">Edit Profile</h3>
-                <form name="form" class="popup__form" id="edit-profile-form">
-                    <input name="Name" type="text" placeholder="Sam" class="popup__input" id="edit-form-input-name" />
-                    <input name="Description" type="text" placeholder="Explorer" class="popup__input" id="edit-form-input-description" />
-                    <button type="submit" class="popup__submit-button" id="edit-submit-button">Save</button>
-                </form>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Around The U.S.</title>
+    <link href="./pages/Index.css" rel="stylesheet" />
+  </head>
+  <body class="page">
+    <header class="header">
+      <img src="images/logo.svg" alt="logo" class="header__logo" />
+    </header>
+    <main>
+      <section class="profile">
+        <div class="profile__container">
+          <div class="profile__avatar">
+            <img
+              src="images/profile pic.jpg"
+              alt="profile picture of sam kavanagh mixed short haired wearing black puffer jacket inside with concrete background"
+              class="profile__image"
+            />
+          </div>
+          <div class="profile__info">
+            <h2 class="profile__name" id="edit-card-name">Sam Kavanagh</h2>
+            <p class="profile__description" id="edit-card-description">
+              Explorer
+            </p>
+            <button
+              type="button"
+              id="edit-Profile-Button"
+              class="profile__edit-button"
+            ></button>
+          </div>
         </div>
-        <div class="popup" id="add-profile-popup">
-            <div class="popup__container">
-                <button type="button" class="popup__close-button"></button>
-                <h3 class="popup__title">New place</h3>
-                <form name="form" class="popup__form" id="new-card-form">
-                    <input name="title" type="text" placeholder="Title" class="popup__input" id="add-form-input-title" />
-                    <input name="link" type="text" placeholder="Image Link" class="popup__input" id="add-form-input-link" />
-                    <button type="submit" class="popup__submit-button" id="add-submit-button">Create</button>
-                </form>
-            </div>
+        <button type="button" class="profile__add-button"></button>
+      </section>
+      <section class="elements"></section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">© 2021 Around The U.S.</p>
+    </footer>
+    <div class="popup" id="edit-profile-popup">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button"></button>
+        <h3 class="popup__title">Edit Profile</h3>
+        <form name="form" class="popup__form" id="edit-profile-form">
+          <input
+            id="name-input"
+            name="Name"
+            type="text"
+            placeholder="Sam"
+            class="popup__input"
+            minlength="2"
+            maxlength="40"
+            required
+          />
+          <span id="name-input-error" class="popup__error-text"
+            >Please fill out this field.</span
+          >
+          <input
+            id="description-input"
+            name="Description"
+            type="text"
+            placeholder="Explorer"
+            class="popup__input"
+            minlength="2"
+            maxlength="200"
+            required
+          />
+          <span id="description-input-error" class="popup__error-text"
+            >Please fill out this field.</span
+          >
+          <button
+            type="submit"
+            class="popup__submit-button"
+            id="edit-submit-button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="popup" id="add-profile-popup">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button"></button>
+        <h3 class="popup__title">New place</h3>
+        <form name="form" class="popup__form" id="new-card-form">
+          <input
+            id="title-input"
+            name="title"
+            type="text"
+            placeholder="Title"
+            class="popup__input"
+            minlength="1"
+            maxlength="30"
+            required
+          />
+          <span id="title-input-error" class="popup__error-text"
+            >Please fill out this field.</span
+          >
+          <input
+            id="link-input"
+            name="link"
+            type="url"
+            placeholder="Image Link"
+            class="popup__input"
+            required
+          />
+          <span id="link-input-error" class="popup__error-text"
+            >Please enter a web address.</span
+          >
+          <button
+            type="submit"
+            class="popup__submit-button"
+            id="add-submit-button"
+          >
+            Create
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="popup" id="popup-preview">
+      <div class="popup__container popup__container_type_preview">
+        <button type="button" class="popup__close-button"></button>
+        <img class="popup__preview-image" src="" alt="" />
+        <p class="popup__caption"></p>
+      </div>
+    </div>
+    <template id="card-template">
+      <article class="element">
+        <button type="button" class="element__trash-button"></button>
+        <img class="element__image" src="" alt="" />
+        <div class="element__card">
+          <h2 class="element__title"></h2>
+          <button type="button" class="element__like-button"></button>
         </div>
-        <div class="popup" id="popup-preview">
-            <div class="popup__container popup__container_type_preview">
-                <button type="button" class="popup__close-button"></button>
-                <img class="popup__preview-image" src=" " alt=" " />
-                <p class="popup__caption"></p>
-            </div>
-        </div>
-        <template id="card-template">
-            <article class="element">
-                <button type="button" class="element__trash-button"></button>
-                <img class="element__image" src=" " alt=" " />
-                <div class="element__card">
-                    <h2 class="element__title"></h2>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </article>
-        </template>
-        <script src="scripts/index.js" type="text/javascript"></script>
-    </body>
+      </article>
+    </template>
+    <script src="scripts/index.js" type="text/javascript"></script>
+    <script src="scripts/validate.js" type="text/javascript"></script>
+  </body>
 </html>

@@ -27,6 +27,7 @@ const initialCards = [
 ];
 /* -----------------------Wrappers---------------------------*/
 const cardTemplate = document.querySelector("#card-template");
+const popups = document.querySelector(".popup");
 const cardList = document.querySelector(".elements");
 const editProfilePopupForm = document.querySelector(".popup__form");
 const editProfilePopup = document.querySelector("#edit-profile-popup");
@@ -51,12 +52,10 @@ const previewImageCloseButton = previewImagePopup.querySelector(
 );
 
 /* -------------------------Form input------------------------------*/
-const editFormInputName = document.querySelector("#edit-form-input-name");
-const editFormInputDescription = document.querySelector(
-  "#edit-form-input-description"
-);
-const addFormInputName = document.querySelector("#add-form-input-title");
-const addFormInputLink = document.querySelector("#add-form-input-link");
+const editFormInputName = document.querySelector("#name-input");
+const editFormInputDescription = document.querySelector("#description-input");
+const addFormInputName = document.querySelector("#title-input");
+const addFormInputLink = document.querySelector("#link-input");
 
 /* -------------------------Templates------------------------------*/
 
@@ -113,6 +112,7 @@ initialCards.forEach((cardData) => {
 //Open Popup
 function openPopup(popup) {
   popup.classList.add("popup_open");
+  document.addEventListener("keydown", keyHandlerEscape);
 }
 
 //Open openPropfilePopup
@@ -126,7 +126,22 @@ function openPropfilePopup(editProfilePopup) {
 //Close Popup
 function closePopup(popup) {
   popup.classList.remove("popup_open");
+  document.removeEventListener("keydown", keyHandlerEscape);
 }
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    const keyHandlerEscape = document.querySelector(".popup_open");
+    closePopup(keyHandlerEscape);
+  }
+});
+
+popups.addEventListener("mousedown", (e) => {
+  if (e.target === popups) {
+    closePopup(popups);
+  }
+});
+
 /* -------------------------EventListeners------------------------------*/
 
 //Edit profile Open/close
