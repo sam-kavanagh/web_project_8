@@ -27,7 +27,6 @@ const initialCards = [
 ];
 /* -----------------------Wrappers---------------------------*/
 const cardTemplate = document.querySelector("#card-template");
-const popups = document.querySelector(".popup");
 const cardList = document.querySelector(".elements");
 const editProfilePopupForm = document.querySelector(".popup__form");
 const editProfilePopup = document.querySelector("#edit-profile-popup");
@@ -109,10 +108,27 @@ initialCards.forEach((cardData) => {
 
 //----------Popup Functions----------//
 
+// Escape key Handler
+function keyHandlerEscape(event) {
+  if (event.key === "Escape") {
+    const popup = document.querySelector(".popup_open");
+    closePopup(popup);
+  }
+}
+//Mousedown Handler
+function mouseDownHandler(event) {
+  console.log(event.target.classList);
+  if (Object.values(event.target.classList).includes("popup_open")) {
+    const popup = document.querySelector(".popup_open");
+    closePopup(popup);
+  }
+}
+
 //Open Popup
 function openPopup(popup) {
   popup.classList.add("popup_open");
   document.addEventListener("keydown", keyHandlerEscape);
+  document.addEventListener("mousedown", mouseDownHandler);
 }
 
 //Open openPropfilePopup
@@ -121,26 +137,16 @@ function openPropfilePopup(editProfilePopup) {
   editFormInputDescription.value = editCardDescription.textContent;
 
   editProfilePopup.classList.add("popup_open");
+  document.addEventListener("keydown", keyHandlerEscape);
+  document.addEventListener("mousedown", mouseDownHandler);
 }
 
 //Close Popup
 function closePopup(popup) {
   popup.classList.remove("popup_open");
   document.removeEventListener("keydown", keyHandlerEscape);
+  document.removeEventListener("mousedown", mouseDownHandler);
 }
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    const keyHandlerEscape = document.querySelector(".popup_open");
-    closePopup(keyHandlerEscape);
-  }
-});
-
-popups.addEventListener("mousedown", (e) => {
-  if (e.target === popups) {
-    closePopup(popups);
-  }
-});
 
 /* -------------------------EventListeners------------------------------*/
 
