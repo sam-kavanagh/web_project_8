@@ -50,9 +50,8 @@ const toggleButton = (inputList, buttonEl, settings) => {
 function setEventListeners(formEl, settings) {
   const inputList = [...formEl.querySelectorAll(settings.inputSelector)];
   const buttonEl = formEl.querySelector(settings.submitButtonSelector);
-  if (formEl.id === "new-card-form") {
-    toggleButton(inputList, buttonEl, settings);
-  }
+  toggleButton(inputList, buttonEl, settings);
+
   inputList.forEach((inputEl) => {
     inputEl.addEventListener("input", (event) => {
       checkInputValidity(formEl, inputEl, settings);
