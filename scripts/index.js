@@ -39,7 +39,7 @@ const previewImageCaption = document.querySelector(".popup__caption");
 const editCardName = document.querySelector("#edit-card-name");
 const editCardDescription = document.querySelector("#edit-card-description");
 const newCardSubmit = addNewCardPopup.querySelector("#add-submit-button");
-const submitButton = document.querySelector(".popup__submit-button_disabled");
+const addCardSubmitButton = document.querySelector(".popup__submit-button");
 /* -------------------------Buttons------------------------------*/
 const editProfileButton = document.querySelector("#edit-Profile-Button");
 const addPopupButton = document.querySelector(".profile__add-button");
@@ -175,6 +175,6 @@ addProfilePopupForm.addEventListener("submit", (e) => {
   };
   renderCard(newCard);
   addProfilePopupForm.reset();
-  submitButton.disabled = true;
+  addCardSubmitButton.disabled = true;
   closePopup(addNewCardPopup);
 });
