@@ -22,6 +22,7 @@ const hideMessageError = (inputEl, formEl, settings) => {
 //Form validity check
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputEl) => {
+    console.log(inputEl.validity, inputEl.id, inputEl.value);
     return !inputEl.validity.valid;
   });
 };
@@ -50,7 +51,6 @@ const toggleButton = (inputList, buttonEl, settings) => {
 function setEventListeners(formEl, settings) {
   const inputList = [...formEl.querySelectorAll(settings.inputSelector)];
   const buttonEl = formEl.querySelector(settings.submitButtonSelector);
-  toggleButton(inputList, buttonEl, settings);
 
   inputList.forEach((inputEl) => {
     inputEl.addEventListener("input", (event) => {
@@ -58,6 +58,17 @@ function setEventListeners(formEl, settings) {
       toggleButton(inputList, buttonEl, settings);
     });
   });
+
+  document
+    .querySelector("#edit-Profile-Button")
+    .addEventListener("click", () => {
+      toggleButton(inputList, buttonEl, settings);
+    });
+  document
+    .querySelector("#add-profile-button")
+    .addEventListener("click", () => {
+      toggleButton(inputList, buttonEl, settings);
+    });
 }
 
 //enable Validation of form

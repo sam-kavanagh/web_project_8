@@ -140,7 +140,6 @@ function openPopup(popup) {
 
 //close popups
 popups.forEach((popup) => {
-  console.log(popup);
   popup.addEventListener("click", (evt) => {
     if (evt.target.classList.contains("popup_open")) {
       closePopup(popup);
@@ -156,8 +155,8 @@ popups.forEach((popup) => {
 //Edit profile Open/close
 editProfileButton.addEventListener("click", () => {
   openPopup(editProfilePopup);
-  editFormInputName.value = editCardName.textContent;
-  editFormInputDescription.value = editCardDescription.textContent;
+  editFormInputName.value = editCardName.innerText;
+  editFormInputDescription.value = editCardDescription.innerText;
 });
 
 addPopupButton.addEventListener("click", () => {
@@ -175,5 +174,6 @@ addProfilePopupForm.addEventListener("submit", (e) => {
   renderCard(newCard);
   addProfilePopupForm.reset();
   newCardSubmitButton.disabled = true;
+  newCardSubmitButton.classList.add("popup__submit-button_disabled");
   closePopup(addNewCardPopup);
 });
