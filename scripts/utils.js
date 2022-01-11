@@ -18,7 +18,6 @@ function handleEscapeKey(event) {
 }
 
 function handleMouseDown(event) {
-  console.log(event.target.classList);
   if (Object.values(event.target.classList).includes("popup_open")) {
     closePopup(event.target);
   }

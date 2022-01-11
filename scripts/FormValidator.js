@@ -1,7 +1,7 @@
 class FormValidator {
   constructor(settings, formEl) {
     this._inputSelector = settings.inputSelector;
-    this._inputTextError = settings.InputTextError;
+    this._inputTextError = settings.inputTextError;
     this._inputVisibleError = settings.inputVisibleError;
     this._submitButtonSelector = settings.submitButtonSelector;
     this._inactiveButtonClass = settings.inactiveButtonClass;
@@ -10,11 +10,11 @@ class FormValidator {
   }
 
   _addInputError(inputEl) {
-    inputEl.classList.add(this._InputTextError);
+    inputEl.classList.add(this._inputTextError);
   }
 
   _removeInputError(inputEl) {
-    inputEl.classList.remove(this._InputTextError);
+    inputEl.classList.remove(this._inputTextError);
   }
 
   _showMessageError(inputEl) {
@@ -67,15 +67,13 @@ class FormValidator {
     });
 
     document
-      .querySelector("#edit-Profile-Button")
+      .querySelector("#edit-profile-button")
       .addEventListener("click", () => {
         this._toggleButton(inputList, buttonEl);
       });
-    document
-      .querySelector("#add-profile-button")
-      .addEventListener("click", () => {
-        this._toggleButton(inputList, buttonEl);
-      });
+    document.querySelector("#add-card-button").addEventListener("click", () => {
+      this._toggleButton(inputList, buttonEl);
+    });
   }
 
   enableValidation() {

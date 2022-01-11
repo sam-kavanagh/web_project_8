@@ -35,17 +35,17 @@ const cardList = document.querySelector(".elements");
 const popups = document.querySelectorAll(".popup");
 const handleEditProfileForm = document.querySelector(".popup__form");
 const editProfilePopup = document.querySelector("#edit-profile-popup");
-const addNewCardPopup = document.querySelector("#add-profile-popup");
+const addNewCardPopup = document.querySelector("#add-card-popup");
 const addProfilePopupForm = addNewCardPopup.querySelector("#new-card-form");
-const previewImagePopup = document.querySelector("#popup-preview");
-const previewImageElement = document.querySelector(".popup__preview-image");
-const previewImageCaption = document.querySelector(".popup__caption");
 const editCardName = document.querySelector("#edit-card-name");
 const editCardDescription = document.querySelector("#edit-card-description");
 const newCardSubmitButton = addNewCardPopup.querySelector("#add-submit-button");
+const previewImagePopup = document.querySelector("#popup-preview");
+const previewImageCaption = document.querySelector(".popup__caption");
+
 /* -------------------------Buttons------------------------------*/
-const editProfileButton = document.querySelector("#edit-Profile-Button");
-const addPopupButton = document.querySelector(".profile__add-button");
+const editProfileButton = document.querySelector("#edit-profile-button");
+const addPopupButton = document.querySelector("#add-card-button");
 
 /* -------------------------Form input------------------------------*/
 const editFormInputName = document.querySelector("#name-input");
@@ -94,8 +94,8 @@ initialCards.forEach((cardData) => {
 //----------Popup Functions----------//
 
 //Edit Profile form submit handler
-handleEditProfileForm.addEventListener("submit", function (event) {
-  event.preventDefault();
+handleEditProfileForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
   editCardName.textContent = editFormInputName.value;
   editCardDescription.textContent = editFormInputDescription.value;
   closePopup(editProfilePopup);
@@ -104,13 +104,13 @@ handleEditProfileForm.addEventListener("submit", function (event) {
 /* -------------------------EventListeners------------------------------*/
 
 //Edit profile Open/close
-editProfileButton.addEventListener("click", () => {
+editProfileButton.addEventListener("click", (evt) => {
   openPopup(editProfilePopup);
   editFormInputName.value = editCardName.innerText;
   editFormInputDescription.value = editCardDescription.innerText;
 });
 
-addPopupButton.addEventListener("click", () => {
+addPopupButton.addEventListener("click", (evt) => {
   openPopup(addNewCardPopup);
 });
 
@@ -125,8 +125,8 @@ popups.forEach((popup) => {
   });
 });
 
-addProfilePopupForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+addProfilePopupForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
   const newCard = {
     name: addFormInputName.value,
     link: addFormInputLink.value,
@@ -137,3 +137,5 @@ addProfilePopupForm.addEventListener("submit", (e) => {
   newCardSubmitButton.classList.add("popup__submit-button_disabled");
   closePopup(addNewCardPopup);
 });
+
+export { previewImagePopup, previewImageCaption };
