@@ -1,4 +1,8 @@
-import { previewImagePopup, previewImageCaption } from "./index.js";
+import {
+  previewImagePopup,
+  previewImageElement,
+  previewImageCaption,
+} from "./index.js";
 
 class Card {
   constructor(cardSelector, data) {
@@ -52,7 +56,7 @@ class Card {
     this._previewImageElement.src = this._data.link;
     this._previewImageCaption.textContent = this._data.name;
     this._previewImageElement.alt = this._data.name;
-    openPopup(previewImagePopup);
+    openPopup(this._previewImagePopup);
   }
 }
 

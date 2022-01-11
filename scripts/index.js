@@ -42,6 +42,7 @@ const editCardDescription = document.querySelector("#edit-card-description");
 const newCardSubmitButton = addNewCardPopup.querySelector("#add-submit-button");
 const previewImagePopup = document.querySelector("#popup-preview");
 const previewImageCaption = document.querySelector(".popup__caption");
+const previewImageElement = document.querySelector(".popup__preview-image");
 
 /* -------------------------Buttons------------------------------*/
 const editProfileButton = document.querySelector("#edit-profile-button");
@@ -138,4 +139,4 @@ addProfilePopupForm.addEventListener("submit", (evt) => {
   closePopup(addNewCardPopup);
 });
 
-export { previewImagePopup, previewImageCaption };
+export { previewImagePopup, previewImageElement, previewImageCaption };
