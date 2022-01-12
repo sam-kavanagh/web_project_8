@@ -1,8 +1,4 @@
-import {
-  previewImagePopup,
-  previewImageElement,
-  previewImageCaption,
-} from "./index.js";
+import { openPopup } from "./utils.js";
 
 class Card {
   constructor(cardSelector, data) {
@@ -11,33 +7,38 @@ class Card {
   }
 
   createCard() {
-    this._card = this._cardSelector.content
+    const card = this._cardSelector.content
       .querySelector(".element")
       .cloneNode(true);
-    this._imageElement = this._card.querySelector(".element__image");
-    this._titleElement = this._card.querySelector(".element__title");
+
+    this._imageElement = card.querySelector(".element__image");
+    this._titleElement = card.querySelector(".element__title");
 
     this._imageElement.src = this._data.link;
     this._titleElement.textContent = this._data.name;
     this._imageElement.alt = this._data.name;
 
-    this._setEeventListeners();
+    this._likeButton = card.querySelector(".element__like-button");
+    this._trashButton = card.querySelector(".element__trash-button");
 
-    return this._card;
+    this._previewImageElement = document.querySelector(".popup__preview-image");
+    this._previewImagePopup = document.querySelector("#popup-preview");
+    this._previewImageCaption = document.querySelector(".popup__caption");
+
+    this._setEventListeners();
+
+    return card;
   }
 
-  _setEeventListeners() {
-    this._previewImageElement = document.querySelector(".popup__preview-image");
-    this._previewImageElement.addEventListener("click", (evt) => {
+  _setEventListeners() {
+    this._imageElement.addEventListener("click", (evt) => {
       this._handlePreviewImage();
     });
 
-    this._likeButton = this._card.querySelector(".element__like-button");
     this._likeButton.addEventListener("click", (evt) => {
       this._handleLikeButton();
     });
 
-    this._trashButton = this._card.querySelector(".element__trash-button");
     this._trashButton.addEventListener("click", (evt) => {
       this._handleTrashButton();
     });

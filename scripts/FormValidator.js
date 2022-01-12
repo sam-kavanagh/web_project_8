@@ -45,34 +45,31 @@ class FormValidator {
     }
   }
 
-  _toggleButton(inputList, buttonEl) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonEl.disabled = true;
-      buttonEl.classList.add(this._inactiveButtonClass);
+  _toggleButton() {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._buttonEl.disabled = true;
+      this._buttonEl.classList.add(this._inactiveButtonClass);
     } else {
-      buttonEl.classList.remove(this._inactiveButtonClass);
-      buttonEl.disabled = false;
+      this._buttonEl.classList.remove(this._inactiveButtonClass);
+      this._buttonEl.disabled = false;
     }
   }
 
   _setEventListeners() {
-    const inputList = [...this._formEl.querySelectorAll(this._inputSelector)];
-    const buttonEl = this._formEl.querySelector(this._submitButtonSelector);
+    this._inputList = [...this._formEl.querySelectorAll(this._inputSelector)];
 
-    inputList.forEach((inputEl) => {
-      inputEl.addEventListener("input", (event) => {
+    this._buttonEl = this._formEl.querySelector(this._submitButtonSelector);
+
+    this.resetValidation();
+  }
+
+  resetValidation() {
+    this._toggleButton();
+    this._inputList.forEach((inputEl) => {
+      inputEl.addEventListener("input", () => {
         this._checkInputValidity(inputEl);
-        this._toggleButton(inputList, buttonEl);
+        this._toggleButton();
       });
-    });
-
-    document
-      .querySelector("#edit-profile-button")
-      .addEventListener("click", () => {
-        this._toggleButton(inputList, buttonEl);
-      });
-    document.querySelector("#add-card-button").addEventListener("click", () => {
-      this._toggleButton(inputList, buttonEl);
     });
   }
 

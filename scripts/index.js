@@ -30,7 +30,7 @@ const initialCards = [
   },
 ];
 /* -----------------------Wrappers---------------------------*/
-const cardTemplate = document.querySelector("#card-template");
+const cardSelector = document.querySelector("#card-template");
 const cardList = document.querySelector(".elements");
 const popups = document.querySelectorAll(".popup");
 const handleEditProfileForm = document.querySelector(".popup__form");
@@ -40,13 +40,10 @@ const addProfilePopupForm = addNewCardPopup.querySelector("#new-card-form");
 const editCardName = document.querySelector("#edit-card-name");
 const editCardDescription = document.querySelector("#edit-card-description");
 const newCardSubmitButton = addNewCardPopup.querySelector("#add-submit-button");
-const previewImagePopup = document.querySelector("#popup-preview");
-const previewImageCaption = document.querySelector(".popup__caption");
-const previewImageElement = document.querySelector(".popup__preview-image");
 
 /* -------------------------Buttons------------------------------*/
 const editProfileButton = document.querySelector("#edit-profile-button");
-const addPopupButton = document.querySelector("#add-card-button");
+const addCardButton = document.querySelector("#add-card-button");
 
 /* -------------------------Form input------------------------------*/
 const editFormInputName = document.querySelector("#name-input");
@@ -60,7 +57,7 @@ const addFormInputLink = document.querySelector("#link-input");
 const validationSettings = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
-  InputTextError: "popup__input_has-error",
+  inputTextError: "popup__input_has-error",
   inputVisibleError: "popup__text-error_visible",
   submitButtonSelector: ".popup__submit-button",
   inactiveButtonClass: "popup__submit-button_disabled",
@@ -84,7 +81,7 @@ function addCardToPage(card) {
 
 //(function below turns data into html)
 function renderCard(data) {
-  const card = new Card(cardTemplate, data);
+  const card = new Card(cardSelector, data);
   addCardToPage(card.createCard());
 }
 
@@ -92,9 +89,14 @@ initialCards.forEach((cardData) => {
   renderCard(cardData);
 });
 
-//----------Popup Functions----------//
+/* -------------------------EventListeners------------------------------*/
 
-//Edit Profile form submit handler
+editProfileButton.addEventListener("click", (evt) => {
+  openPopup(editProfilePopup);
+  editFormInputName.value = editCardName.innerText;
+  editFormInputDescription.value = editCardDescription.innerText;
+});
+
 handleEditProfileForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   editCardName.textContent = editFormInputName.value;
@@ -102,17 +104,22 @@ handleEditProfileForm.addEventListener("submit", (evt) => {
   closePopup(editProfilePopup);
 });
 
-/* -------------------------EventListeners------------------------------*/
-
-//Edit profile Open/close
-editProfileButton.addEventListener("click", (evt) => {
-  openPopup(editProfilePopup);
-  editFormInputName.value = editCardName.innerText;
-  editFormInputDescription.value = editCardDescription.innerText;
+addCardButton.addEventListener("click", (evt) => {
+  openPopup(addNewCardPopup);
 });
 
-addPopupButton.addEventListener("click", (evt) => {
-  openPopup(addNewCardPopup);
+addProfilePopupForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const newCard = {
+    name: addFormInputName.value,
+    link: addFormInputLink.value,
+  };
+
+  renderCard(newCard);
+  addProfilePopupForm.reset();
+  newCardSubmitButton.classList.add("popup__submit-button_disabled");
+  closePopup(addNewCardPopup);
+  addCardFormValidator.resetValidation();
 });
 
 popups.forEach((popup) => {
@@ -125,18 +132,3 @@ popups.forEach((popup) => {
     }
   });
 });
-
-addProfilePopupForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const newCard = {
-    name: addFormInputName.value,
-    link: addFormInputLink.value,
-  };
-  renderCard(newCard);
-  addProfilePopupForm.reset();
-  newCardSubmitButton.disabled = true;
-  newCardSubmitButton.classList.add("popup__submit-button_disabled");
-  closePopup(addNewCardPopup);
-});
-
-export { previewImagePopup, previewImageElement, previewImageCaption };
