@@ -5,15 +5,15 @@ class UserInfo {
   }
 
   getUserInfo() {
-    return {
-      userName: this._userNameElement.textContent,
-      userDescription: this._userDescriptionElement.textContent,
-    };
-  }
+    return { 
+      userName: this._userNameElement.textContent, 
+      userDescription: this._userDescriptionElement.textContent, 
+    }; 
+  } 
 
-  setUserInfo() {
-    this._userNameElement.textContent = userName;
-    this._userDescriptionElement.textContent = userDescription;
+  setUserInfo(data) { 
+    this._userNameElement.textContent = data.Name; 
+    this._userDescriptionElement.textContent = data.Description; 
   }
 }
 
