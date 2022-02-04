@@ -6,8 +6,8 @@ class UserInfo {
 
   getUserInfo() {
     return { 
-      userName: this._userNameElement.textContent, 
-      userDescription: this._userDescriptionElement.textContent, 
+      Name: this._userNameElement.textContent, 
+      Description: this._userDescriptionElement.textContent, 
     }; 
   } 
 

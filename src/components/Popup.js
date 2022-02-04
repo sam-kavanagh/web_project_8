@@ -21,12 +21,12 @@ class Popup {
 
   open() {
     this._popupElement.classList.add("popup_open");
-    document.addEventListener("keydown",this._handleEscClose);
+    document.addEventListener("keydown", this._handleEscClose);
   }
 
   close() {
     this._popupElement.classList.remove("popup_open");
-    document.removeEventListener("keydown",this._handleEscClose);
+    document.removeEventListener("keydown", this._handleEscClose);
   }
 
 }

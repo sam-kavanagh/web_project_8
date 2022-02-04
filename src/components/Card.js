@@ -41,7 +41,7 @@ class Card {
   }
   
   _handleTrashButton() {
-    const card = this._element.remove();
+    this._element.remove();
 
     this.element = null;
   }
