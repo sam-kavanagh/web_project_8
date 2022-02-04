@@ -32,6 +32,4 @@ export const validationSettings = {
   inputVisibleError: "popup__text-error_visible",
   submitButtonSelector: ".popup__submit-button",
   inactiveButtonClass: "popup__submit-button_disabled",
-  userNameSelector:"#name-input",
-  userDescriptionSelector:"#description-input"
 };

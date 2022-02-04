@@ -25,7 +25,7 @@ const cardPreview = new PopupWithImage("#popup-preview");
 const createNewCard = (data) => {
       const card = new Card(
     {
-      data,
+      data: { name: data.name || data.title, link: data.link },
       handleCardClick: (imgData) => {
         cardPreview.open(imgData);
       },
