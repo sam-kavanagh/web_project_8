@@ -23,6 +23,11 @@
               alt="profile picture of sam kavanagh mixed short haired wearing black puffer jacket inside with concrete background"
               class="profile__image"
             />
+            <button
+            type="button"
+            id="profile-avatar-button"
+            class="profile__edit-button_type-avatar"
+          ></button>
           </div>
           <div class="profile__info">
             <h2 class="profile__name" id="edit-card-name">Sam Kavanagh</h2>
@@ -54,7 +59,7 @@
         <form name="form" class="popup__form" id="edit-profile-form">
           <input
             id="name-input"
-            name="Name"
+            name="name"
             type="text"
             placeholder="Sam"
             class="popup__input"
@@ -67,7 +72,7 @@
           >
           <input
             id="description-input"
-            name="Description"
+            name="description"
             type="text"
             placeholder="Explorer"
             class="popup__input"
@@ -127,6 +132,48 @@
         </form>
       </div>
     </div>
+    <div class="popup" id="profile-avatar-popup">
+      <div class="popup__container popup__container_type_profile-avatar">
+        <button type="button" class="popup__close-button"></button>
+        <h3 class="popup__title">Change profile picture</h3>
+        <form name="form" class="popup__form" id="profile-avatar-form">
+          <input
+            id="title-input"
+            name="title"
+            type="text"
+            placeholder="https://somewebsite.com/someimage.jpg"
+            class="popup__input"
+            minlength="1"
+            maxlength="30"
+            required
+          />
+          <span id="title-input-error" class="popup__error-text"
+            >Please fill out this field.</span
+          >
+          
+          <button
+            type="submit"
+            class="popup__submit-button"
+            id="profile-image-submit-button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="popup" id="delete-card-popup">
+      <div class="popup__container popup__container_type_delete">
+        <button type="button" class="popup__close-button"></button>
+        <h3 class="popup__title">Are you sure?</h3>
+        <button
+        type="submit"
+        class="popup__submit-button"
+        id="delete-submit-button"
+      >
+        Yes
+      </button>
+      </div>
+    </div>
     <div class="popup" id="popup-preview">
       <div class="popup__container popup__container_type_preview">
         <button type="button" class="popup__close-button"></button>
@@ -140,7 +187,10 @@
         <img class="element__image" src=" " alt=" " />
         <div class="element__card">
           <h2 class="element__title"></h2>
-          <button type="button" class="element__like-button"></button>
+          <div class="element__like-container">
+            <button type="button" class="element__like-button"></button>
+            <p class = "element__like-count"> 6 </p>
+          </div>
         </div>
       </article>
     </template>
