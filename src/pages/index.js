@@ -38,7 +38,6 @@ const initialCardsList = api.getInitialCardList();
 
 Promise.all([api.getProfileInfo(), api.getInitialCardList()])
   .then(([info, card]) => {
-    console.log({card});
     userData.setProfileInfo({
       name: name,
       description: description,

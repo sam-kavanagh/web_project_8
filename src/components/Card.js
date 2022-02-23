@@ -94,7 +94,6 @@ class Card {
   
 
   updateLikes(data) {
-    debugger;
     this._element.querySelector(".element__like-count").textContent = this._likes.length;
     {
       if (this.isLiked()) {
