@@ -37,17 +37,16 @@ const initialProfile = api.getProfileInfo();
 const initialCardsList = api.getInitialCardList();
 
 Promise.all([api.getProfileInfo(), api.getInitialCardList()])
-  .then(([userInfo, initialCards]) => {
-    const { name, about, avatar, _id } = userInfo;
-    userData.setUserInfo({
+  .then(([info, card]) => {
+    console.log({card});
+    userData.setProfileInfo({
       name: name,
-      about: about,
-      _id: _id,
+      description: description,
     });
-    userData.setUserAvatar({
+    userData.setProfileAvatar({
       avatar: avatar,
     });
-    cardList.renderItems(initialCards.reverse());
+    cardList.renderItems(card.reverse());
   })
   .catch((err) => console.error(`Error loading initial info: ${err}`))
 
@@ -55,13 +54,20 @@ Promise.all([api.getProfileInfo(), api.getInitialCardList()])
 //PopupWithImage instance
 const cardPreview = new PopupWithImage("#popup-preview");
 
+//UserInfo instance
+const userData = new UserInfo({
+  userNameSelector: "#edit-card-name",
+  userDescriptionSelector: "#edit-card-description",
+  userAvatarSelector: ".profile__image",
+});
 
 //Card instance
 const createNewCard = (data) => {
   const card = new Card(
     {
-      data: { name: data.name || data.title, link: data.link },
-      currentUserId: userInfo.getUserId(),
+      data: { name: data.name || data.title, link: data.link , 
+      ownerId: data.ownerId, likes:data.likes, cardId:data._id},
+      userId: userData.getUserId(),
       handleCardClick: (imgData) => {
         cardPreview.open(imgData);
       },
@@ -78,7 +84,7 @@ const createNewCard = (data) => {
           api
           .deleteCard(card.getId())
           .then(() => {
-            card._card.remove();
+            card.remove();
           })
           .catch((error) => {
             console.error(`Delete failed: ${err}`)
@@ -100,22 +106,14 @@ const cardSection = new Section(
   },
   ".elements"
 );
- 
-//UserInfo instance
-const userInfo = new UserInfo({
-  userNameSelector: "#edit-card-name",
-  userDescriptionSelector: "#edit-card-description",
-  userAvatarSelector: ".profile__image",
-});
 
 //PopupWithForm instance for edit profile popup
 const userInfoPopup = new PopupWithForm({
   popupSelector: "#edit-profile-popup",
   handleFormSubmit: (data) => {   
-    userInfo.setUserInfo(data);
+    userData.setUserInfo(data);
   },
 });
-
 
 //Edit profile avatar popup window
 const profileAvatarPopup = new PopupWithForm({
@@ -125,7 +123,7 @@ const profileAvatarPopup = new PopupWithForm({
         api
         .setProfileAvatar({ avatar: data.avatar })
         .then((data) => {
-          userInfo.setUserInfo({ avatar: data.avatar });
+          userData.setUserInfo({ avatar: data.avatar });
           profileAvatarPopup.closeModal();
         })
         .catch((err) => console.error(`Error changing user avatar: ${err}`))
@@ -175,7 +173,7 @@ const avatarFormValidator = new FormValidator(
 /*event listeners for page*/
 //edit profile open popup 
 editProfileButton.addEventListener("click", (evt) => {
-  const currentUserinfo = userInfo.getUserInfo();
+  const currentUserinfo = userData.getUserInfo();
   document.querySelector("#name-input").setAttribute('value', currentUserinfo['name']);
   document.querySelector("#description-input").setAttribute('value', currentUserinfo['description']);
 

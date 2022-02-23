@@ -6,7 +6,7 @@ class Card {
     this._link = data.link;
     this._likes = data.likes;
     this._cardId = data._id;
-    this._ownerId = data.owner._id;
+    this._ownerId = data.ownerId;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleLikesClick = handleLikesClick;
@@ -94,14 +94,14 @@ class Card {
   
 
   updateLikes(data) {
+    debugger;
     this._element.querySelector(".element__like-count").textContent = this._likes.length;
-
-    if (this.isLiked()) {
-      this._element.querySelector(".element__like-button")
-        .classList.add(".element__like-button_full");
-    } else {
-      this._element.querySelector(".element__like-button")
-        .classList.remove(".element__like-button_full");
+    {
+      if (this.isLiked()) {
+        this._element.querySelector(".element__like-button").classList.add(".element__like-button_full");
+        } else {
+          this._element.querySelector(".element__like-button").classList.remove(".element__like-button_full");
+        }
     }
   }
   
