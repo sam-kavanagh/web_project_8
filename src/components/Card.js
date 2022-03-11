@@ -28,13 +28,17 @@ class Card {
 
   _setEventListeners() { 
     this._trashButton = this._element.querySelector(".element__trash-button");
+    if (this._ownerId === this._userId) {
+      this._trashButton.addEventListener("click", (evt) => {
+        this._handleTrashClick(evt);
+        });
+    }
+    else {
+      this._trashButton.remove();
+      }
 
-    this._element.querySelector(".element__like-button").addEventListener("click", (evt) => { 
+    this._likeButton = this._element.querySelector(".element__like-button").addEventListener("click", (evt) => { 
       this._handleLikesClick(); 
-    }); 
-
-    this._element.querySelector(".element__trash-button").addEventListener("click", (evt) => { 
-      this._handleTrashClick(); 
     }); 
 
     this._element.querySelector(".element__image").addEventListener("click", (evt) => 
@@ -48,7 +52,7 @@ class Card {
   } 
 
   _handleLikes() {
-    this._element.querySelector(".element__like-button").classList.toggle("element__like-button_full");
+    this._likeButton.querySelector(".element__like-button").classList.toggle("element__like-button_full");
   }
   
   _handleTrash() {
@@ -76,7 +80,7 @@ class Card {
   }
 
   isLiked() {
-    if (this._likeButton.classList.contains(".element__like-button_full")) {
+    if (this._element.classList.contains(".element__like-button_full")) {
       return true;
     } else {
       return false;
@@ -84,7 +88,7 @@ class Card {
   }
   
   checkIfLiked() {
-    return Boolean(this._likes.find((item) => item._id === this._userId));
+    return Boolean(this._likes.find(() => data._id === this._userId));
   }
   
   setLikesInfo(data) {
@@ -92,20 +96,16 @@ class Card {
     this.updateLikes();
   }
   
+  _checkLikes(data) {
+    this._likeButton.querySelector(".element__like-count").textContent = data.likes.length;
+  }
 
   updateLikes(data) {
-    this._element.querySelector(".element__like-count").textContent = this._likes.length;
-    {
       if (this.isLiked()) {
         this._element.querySelector(".element__like-button").classList.add(".element__like-button_full");
         } else {
           this._element.querySelector(".element__like-button").classList.remove(".element__like-button_full");
         }
-    }
-  }
-  
-  getId() {
-    return this._cardId;
   }
 
 }

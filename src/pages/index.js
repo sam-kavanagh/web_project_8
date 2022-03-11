@@ -1,8 +1,8 @@
 import "../pages/index.css";
 
 //import all classes
-import {initialCards, validationSettings} from "../utils/constants.js";
-import {renderLoading} from "../utils/utils.js";
+import { initialCards, validationSettings } from "../utils/constants.js";
+import { renderLoading } from "../utils/utils.js";
 import Api from "../components/Api.js";
 import Section from "../components/Section";
 import Card from "../components/Card.js";
@@ -12,15 +12,11 @@ import PopupWithDeleteConfirmation from "../components/PopupWithDeleteConfirmati
 import UserInfo from "../components/UserInfo.js";
 import FormValidator from "../components/FormValidator.js";
 
+//Buttons
 const editProfileButton = document.querySelector(".profile__edit-button");
-const addCardButton = document.querySelector(".profile__add-button");
-const cardSelector = document.querySelector("#card-template");
-const cardListSelector = document.querySelector(".elements");
-const nameInputEl = document.querySelector("#name-input");
-const descriptionInputEl = document.querySelector("#description-input");
 const profileAvatarButton = document.querySelector("#profile-avatar-button");
-const deleteCardPopup = document.querySelector("#delete-card-popup");
-
+const deleteCardButton = document.querySelector("#delete-submit-button");
+const addCardButton = document.querySelector(".profile__add-button");
 
 /*create instances of the classes */
 
@@ -33,26 +29,6 @@ const api = new Api({
   },
 });
 
-const initialProfile = api.getProfileInfo();
-const initialCardsList = api.getInitialCardList();
-
-Promise.all([api.getProfileInfo(), api.getInitialCardList()])
-  .then(([info, card]) => {
-    userData.setProfileInfo({
-      name: name,
-      description: description,
-    });
-    userData.setProfileAvatar({
-      avatar: avatar,
-    });
-    cardList.renderItems(card.reverse());
-  })
-  .catch((err) => console.error(`Error loading initial info: ${err}`))
-
-
-//PopupWithImage instance
-const cardPreview = new PopupWithImage("#popup-preview");
-
 //UserInfo instance
 const userData = new UserInfo({
   userNameSelector: "#edit-card-name",
@@ -60,78 +36,88 @@ const userData = new UserInfo({
   userAvatarSelector: ".profile__image",
 });
 
+  Promise.all([api.getUserInfo(), api.getInitialCardList()])
+  .then(([userinfo, cards]) => {
+    const { name, about, avatar, _id } = userinfo;
+    userData.setUserInfo({
+      name: name,
+      about: about,
+      avatar: avatar,
+      _id: _id,
+    });
+    const cardSection = new Section(
+      {
+        items: cards,
+        renderer: (data) => {
+          cardSection.addItem(createNewCard(data));
+        },
+      },
+      ".elements"
+    );
+    cardSection.renderItems();
+  })
+  .catch((err) => console.error(`Error loading initial info: ${err}`));
+
+//PopupWithImage instance
+const cardPreview = new PopupWithImage("#popup-preview");
+
 //Card instance
 const createNewCard = (data) => {
   const card = new Card(
     {
-      data: { name: data.name || data.title, link: data.link , 
-      ownerId: data.ownerId, likes:data.likes, cardId:data._id},
-      userId: userData.getUserId(),
+      data: data,
       handleCardClick: (imgData) => {
-        cardPreview.open(imgData);
+        cardPreview.open(imgData)
       },
-      handleLikeClick: (card) => {
+      handleLikesClick: (data) => {
         api
-          .toggleCardLikeStatus(card.getId(), !card.checkIfLiked())
+          .toggleCardLikeStatus(
+            card,
+            !card.checkIfLiked(data),
+            card.updateLikes()
+          )
           .then((data) => {
             card.setLikesInfo({ ...data });
           })
-          .catch((err) => console.log(`Error changing like status: ${err}`));
       },
-      handleTrashClick: (card) => {
-        deleteCardPopup.open();
-          api
-          .deleteCard(card.getId())
+      handleTrashClick: (evt) => {
+        deleteCardPopup.open(evt, data._id);
+        api
+          .deleteCard(cardId)
           .then(() => {
             card.remove();
           })
-          .catch((error) => {
-            console.error(`Delete failed: ${err}`)
-          })
-      }
+      },
     },
     "#card-template"
   );
   return card.getView();
-}
-
-//Section instance
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: (data) => {
-      cardSection.addItem(createNewCard(data));
-    },
-  },
-  ".elements"
-);
+};
 
 //PopupWithForm instance for edit profile popup
 const userInfoPopup = new PopupWithForm({
   popupSelector: "#edit-profile-popup",
-  handleFormSubmit: (data) => {   
+  handleFormSubmit: (data) => {
     userData.setUserInfo(data);
   },
 });
 
 //Edit profile avatar popup window
 const profileAvatarPopup = new PopupWithForm({
-    popupSelector: "#profile-avatar-popup",
-      handleFormSubmit: (data, cardId) => {
-        renderLoading("#profile-avatar-popup", true);
-        api
-        .setProfileAvatar({ avatar: data.avatar })
-        .then((data) => {
-          userData.setUserInfo({ avatar: data.avatar });
-          profileAvatarPopup.closeModal();
-        })
-        .catch((err) => console.error(`Error changing user avatar: ${err}`))
-        .finally(() => {
-          renderLoading("#profile-avatar-popup");
-        });
-      },
+  popupSelector: "#profile-avatar-popup",
+  handleFormSubmit: (data) => {
+    renderLoading("#profile-avatar-popup", true);
+    api
+      .setUserAvatar({ avatar: data.avatar })
+      .then((data) => {
+        userData.setUserInfo({ avatar: data.avatar });
+        profileAvatarPopup.close();
+      })
+      .finally(() => {
+        renderLoading("#profile-avatar-popup");
+      });
+  },
 });
-profileAvatarPopup.setEventListeners();
 
 //PopupWithForm instance new card popup
 const newCardPopup = new PopupWithForm({
@@ -141,16 +127,28 @@ const newCardPopup = new PopupWithForm({
 
     api
       .addCard(data)
-      .then((data) => {
-        cardList.addItem(createCard(data));
+      .then((cardData) => {
+        cardList.addItem(createCard(cardData));
         newCardPopup.close();
       })
-      .catch((err) => console.error(`Error adding new card: ${err}`)
-      )
       .finally(() => {
         renderLoading("#add-card-popup");
+      });
+  },
+});
+
+//Delete card instance popup
+const deleteCardPopup = new PopupWithForm({
+  popupSelector: "#delete-card-popup",
+  handleFormSubmit: (data) => {
+    renderLoading("#delete-card-popup", true);
+    api
+      .deleteCard(card.getId())
+      .then((data) => {
+        card.handleDeleteCard(data);
+        deleteCardPopup.close();
       })
-  }
+  },
 });
 
 ///FormValidator instance
@@ -170,36 +168,44 @@ const avatarFormValidator = new FormValidator(
 );
 
 /*event listeners for page*/
-//edit profile open popup 
+//edit profile open popup
 editProfileButton.addEventListener("click", (evt) => {
   const currentUserinfo = userData.getUserInfo();
-  document.querySelector("#name-input").setAttribute('value', currentUserinfo['name']);
-  document.querySelector("#description-input").setAttribute('value', currentUserinfo['description']);
+  document
+    .querySelector("#name-input")
+    .setAttribute("value", currentUserinfo["name"]);
+  document
+    .querySelector("#description-input")
+    .setAttribute("value", currentUserinfo["about"]);
 
   userInfoPopup.open(currentUserinfo);
 });
 
-//new card open popup 
+//new card open popup
 addCardButton.addEventListener("click", (evt) => {
   newCardPopup.open();
 
   cardFormValidator.resetValidation();
 });
 
-//edit profile image  popup 
+//edit profile image  popup
 profileAvatarButton.addEventListener("click", (evt) => {
   profileAvatarPopup.open();
 
   avatarFormValidator.resetValidation();
 });
 
+//delete card popup
+deleteCardButton.addEventListener("click", (evt) => {
+  deleteCardPopup.open();
+});
 
 //initialize all my instances
-cardSection.renderItems();
 cardPreview.setEventListeners();
 userInfoPopup.setEventListeners();
+profileAvatarPopup.setEventListeners();
 newCardPopup.setEventListeners();
+deleteCardPopup.setEventListeners();
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 avatarFormValidator.enableValidation();
-

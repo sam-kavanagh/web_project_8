@@ -1,4 +1,3 @@
 .element__like-container {
-    display: flex;
-    align-content: center;
+    display: initial;
 }

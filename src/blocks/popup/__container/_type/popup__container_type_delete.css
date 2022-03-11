@@ -1,11 +1,9 @@
 .popup__container_type_delete {
     display: flex;
-    background-color: #FFFFFF;
+    max-width: 430px;
     max-height: 181px;
-    max-width:  430px;
-    width: auto;
-    padding: 0;
-    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    left: 425px;
+    top: 270px;
     border-radius: 10px;
 }
 

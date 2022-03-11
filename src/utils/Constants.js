@@ -32,6 +32,5 @@ export const validationSettings = {
   inputVisibleError: "popup__text-error_visible",
   submitButtonSelector: ".popup__submit-button",
   inactiveButtonClass: "popup__submit-button_disabled",
+  cardListSelector: ".elements",
 };
-
-// export const renderLoading = 

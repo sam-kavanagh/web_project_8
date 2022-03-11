@@ -9,42 +9,42 @@ class Api {
   }
 
   getAppInfo() {
-  return Promise.all([this.getInitialCardList(), this.getProfileInfo()]);
+  return Promise.all([api.getUserInfo(), api.getInitialCardList()]);
   }
-
- getProfileInfo() {
+  
+  getUserInfo() {
    return fetch(`${this._baseUrl}/users/me`, {
      headers: this._headers,
     }).then(this._handleServerResponse);
- }
-
- setProfileInfo({name, description}) {
+  }
+  
+  setUserInfo({name, about}) {
    return fetch(`${this._baseUrl}/users/me `, {
      headers: this._headers,
      method: "PATCH",
      body: JSON.stringify({
        name,
-       description,
+       about,
      }),
    }).then(this._handleServerResponse);
- }
-
- getInitialCardList() {
+  }
+  
+  getInitialCardList() {
    return fetch (`${this._baseUrl}/cards`, {
      headers: this._headers,
    }).then(this._handleServerResponse);
- }
-
- addCard({name,link}) {
-   return fetch (`${this._baseUrl}/cards`, {
-     headers: this._headers,
-     method: "POST",
-     body: JSON.stringify({
-       name,
-       link,
-     }),
-   }).then(this._handleServerResponse);
- }
+  }
+  
+  addCard({name,link}) {
+    return fetch (`${this._baseUrl}/cards`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    }).then(this._handleServerResponse);
+  }
 
   setCardLikes() {
    return fetch(`${this._baseUrl}/cards/likes/cardId`, {
@@ -60,7 +60,7 @@ class Api {
    }
 
 
-  setProfileAvatar({avatar}) {
+  setUserAvatar({avatar}) {
    return fetch (`${this._baseUrl}/users/me/avatar `, {
      headers: this._headers,
      method: "PATCH",
