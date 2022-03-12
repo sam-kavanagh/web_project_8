@@ -65,29 +65,27 @@ const cardPreview = new PopupWithImage("#popup-preview");
 const createNewCard = (data) => {
   const card = new Card(
     {
-      data: data,
+      data,
       handleCardClick: (imgData) => {
         cardPreview.open(imgData)
       },
-      handleLikesClick: (data) => {
-        api
-          .toggleCardLikeStatus(
-            card,
-            !card.checkIfLiked(data),
-            card.updateLikes()
-          )
-          .then((data) => {
-            card.setLikesInfo({ ...data });
-          })
+      handleLikesClick: () => {
+        if (card.isLiked()) {
+          api
+          .removeLike(data._id)
+          .then((data) => card.updateLikes(data))
+          .catch((err) => console.error(`Error liking card: ${err}`))
+        } else {
+          api
+          .addLike(data._id)
+          .then((data) => card.updateLikes(data))
+          .catch((err) => console.error(`Error liking card: ${err}`))
+        }
       },
       handleTrashClick: (evt) => {
         deleteCardPopup.open(evt, data._id);
-        api
-          .deleteCard(cardId)
-          .then(() => {
-            card.remove();
-          })
       },
+      userId: userData.getUserId(),
     },
     "#card-template"
   );
@@ -95,22 +93,34 @@ const createNewCard = (data) => {
 };
 
 //PopupWithForm instance for edit profile popup
-const userInfoPopup = new PopupWithForm({
+const profileEditPopup = new PopupWithForm({
   popupSelector: "#edit-profile-popup",
   handleFormSubmit: (data) => {
-    userData.setUserInfo(data);
+    renderLoading("#edit-profile-popup", true);
+    api
+      .patchUserInfo(data)
+      .then((profileData) => {
+        userData.setUserInfo(profileData);
+        profileEditPopup.close();
+      })
+      .catch((err) => {
+        console.error(`Error loading edit profile: ${err}`);
+      })
+      .finally(() => {
+        renderLoading("#edit-profile-popup");
+      });
   },
-});
+})
 
 //Edit profile avatar popup window
 const profileAvatarPopup = new PopupWithForm({
   popupSelector: "#profile-avatar-popup",
-  handleFormSubmit: (data) => {
+  handleFormSubmit: (avatar) => {
     renderLoading("#profile-avatar-popup", true);
     api
-      .setUserAvatar({ avatar: data.avatar })
-      .then((data) => {
-        userData.setUserInfo({ avatar: data.avatar });
+      .setUserAvatar(avatar)
+      .then((avatarData) => {
+        userData.setAvatar(avatarData);
         profileAvatarPopup.close();
       })
       .finally(() => {
@@ -119,17 +129,19 @@ const profileAvatarPopup = new PopupWithForm({
   },
 });
 
-//PopupWithForm instance new card popup
+//Create new card popup
 const newCardPopup = new PopupWithForm({
   popupSelector: "#add-card-popup",
   handleFormSubmit: (data) => {
     renderLoading("#add-card-popup", true);
-
     api
       .addCard(data)
       .then((cardData) => {
-        cardList.addItem(createCard(cardData));
+        cardSection.addItem(createCard(cardData));
         newCardPopup.close();
+      })
+      .catch((err) => {
+        console.error(`Error loading new card: ${err}`)
       })
       .finally(() => {
         renderLoading("#add-card-popup");
@@ -140,14 +152,20 @@ const newCardPopup = new PopupWithForm({
 //Delete card instance popup
 const deleteCardPopup = new PopupWithForm({
   popupSelector: "#delete-card-popup",
-  handleFormSubmit: (data) => {
+  handleFormSubmit: (cardId, card) => {
     renderLoading("#delete-card-popup", true);
     api
-      .deleteCard(card.getId())
-      .then((data) => {
-        card.handleDeleteCard(data);
+      .deleteCard(cardId)
+      .then(() => {
+        card.handleDeleteCard();
         deleteCardPopup.close();
       })
+      .catch((err) => {
+        console.error(`Error loading deleting card: ${err}`)
+      })
+      .finally(() => {
+        renderLoading("#delete-card-popup");
+      });
   },
 });
 
@@ -178,8 +196,20 @@ editProfileButton.addEventListener("click", (evt) => {
     .querySelector("#description-input")
     .setAttribute("value", currentUserinfo["about"]);
 
-  userInfoPopup.open(currentUserinfo);
+  profileEditPopup.open(currentUserinfo);
 });
+
+// editProfileButton.addEventListener("click", (evt) => {
+//   const currentUserinfo = userData.getUserInfo();
+//   document
+//     .querySelector("#name-input")
+//     .setAttribute("value", currentUserinfo["name"]);
+//   document
+//     .querySelector("#description-input")
+//     .setAttribute("value", currentUserinfo["about"]);
+
+//   profileEditPopup.open(currentUserinfo);
+// });
 
 //new card open popup
 addCardButton.addEventListener("click", (evt) => {
@@ -202,7 +232,7 @@ deleteCardButton.addEventListener("click", (evt) => {
 
 //initialize all my instances
 cardPreview.setEventListeners();
-userInfoPopup.setEventListeners();
+profileEditPopup.setEventListeners();
 profileAvatarPopup.setEventListeners();
 newCardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();

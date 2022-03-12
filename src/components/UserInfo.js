@@ -9,14 +9,14 @@ class UserInfo {
   getUserInfo() {
     return { 
       name: this._userNameElement.textContent, 
-      about: this._userDescriptionElement.textContent, 
+      about: this._userDescriptionElement.textContent.trim(),
       avatar: this._userAvatarElement.style.backgroundImage,
       _id: this._id,
     }; 
   } 
 
-  setUserInfo({name, about, avatar, _id}) { 
-    this._userNameElement.textContent = name; 
+  setUserInfo({ name, about, avatar, _id }) { 
+    this._userNameElement.textContent = name;  
     this._userDescriptionElement.textContent = about; 
     this._userAvatarElement.src = avatar;
     this._id = _id;
@@ -26,9 +26,9 @@ class UserInfo {
     return this._id;
   }
 
-  // setAvatar({ link }) {
-  //   this._userAvatarElement.src = link;
-  // }
+  setAvatar({ link }) {
+    this._userAvatarElement.src = link;
+  }
 
 }
 

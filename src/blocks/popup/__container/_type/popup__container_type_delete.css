@@ -1,10 +1,10 @@
 .popup__container_type_delete {
-    display: flex;
+    display: initial;
     max-width: 430px;
     max-height: 181px;
     left: 425px;
     top: 270px;
-    border-radius: 10px;
+    position: absolute;
 }
 
 @media screen and (max-width: 600px) {
