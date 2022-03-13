@@ -70,15 +70,15 @@ const createNewCard = (data) => {
         cardPreview.open(imgData)
       },
       handleLikesClick: () => {
-        if (card.isLiked()) {
+        if (card._isLiked()) {
           api
           .removeLike(data._id)
-          .then((data) => card.updateLikes(data))
+          .then((data) => card._updateLike(data))
           .catch((err) => console.error(`Error liking card: ${err}`))
         } else {
           api
           .addLike(data._id)
-          .then((data) => card.updateLikes(data))
+          .then((data) => card._updateLike(data))
           .catch((err) => console.error(`Error liking card: ${err}`))
         }
       },
@@ -115,10 +115,10 @@ const profileEditPopup = new PopupWithForm({
 //Edit profile avatar popup window
 const profileAvatarPopup = new PopupWithForm({
   popupSelector: "#profile-avatar-popup",
-  handleFormSubmit: (avatar) => {
+  handleFormSubmit: (data) => {
     renderLoading("#profile-avatar-popup", true);
     api
-      .setUserAvatar(avatar)
+      .setUserAvatar(data)
       .then((avatarData) => {
         userData.setAvatar(avatarData);
         profileAvatarPopup.close();
@@ -239,3 +239,4 @@ deleteCardPopup.setEventListeners();
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 avatarFormValidator.enableValidation();
+

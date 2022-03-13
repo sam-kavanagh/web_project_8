@@ -18,7 +18,7 @@ class Api {
     }).then(this._handleServerResponse);
   }
   
-  patchUserInfo({name, about}) {
+  patchUserInfo({name, description: about}) {
    return fetch(`${this._baseUrl}/users/me`, {
      headers: this._headers,
      method: "PATCH",
