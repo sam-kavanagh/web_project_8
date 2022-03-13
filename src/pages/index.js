@@ -36,25 +36,23 @@ const userData = new UserInfo({
   userAvatarSelector: ".profile__image",
 });
 
+//Section instance
+const cardSection = new Section(
+  {
+    items: null,
+    renderer: (data) => {
+      cardSection.addItem(createNewCard(data));
+    },
+  },
+  ".elements"
+);
+
   Promise.all([api.getUserInfo(), api.getInitialCardList()])
   .then(([userinfo, cards]) => {
-    const { name, about, avatar, _id } = userinfo;
-    userData.setUserInfo({
-      name: name,
-      about: about,
-      avatar: avatar,
-      _id: _id,
-    });
-    const cardSection = new Section(
-      {
-        items: cards,
-        renderer: (data) => {
-          cardSection.addItem(createNewCard(data));
-        },
-      },
-      ".elements"
-    );
-    cardSection.renderItems();
+    cardSection.items = cards;
+    userData.setUserInfo(userinfo);
+    
+    cardSection.renderItems(cards);
   })
   .catch((err) => console.error(`Error loading initial info: ${err}`));
 
@@ -137,7 +135,7 @@ const newCardPopup = new PopupWithForm({
     api
       .addCard(data)
       .then((cardData) => {
-        cardSection.addItem(createCard(cardData));
+        cardSection.addItem(createNewCard(cardData));
         newCardPopup.close();
       })
       .catch((err) => {
@@ -239,4 +237,5 @@ deleteCardPopup.setEventListeners();
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 avatarFormValidator.enableValidation();
+
 
