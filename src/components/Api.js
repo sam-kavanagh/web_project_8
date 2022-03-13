@@ -60,7 +60,7 @@ class Api {
     }).then(this._handleServerResponse);
   }
 
-  setUserAvatar({avatar}) {
+  setUserAvatar(avatar) {
    return fetch (`${this._baseUrl}/users/me/avatar `, {
      headers: this._headers,
      method: "PATCH",
@@ -71,7 +71,7 @@ class Api {
    }
 
 
-  deleteCard({cardId}) {
+  deleteCard(cardId) {
    return fetch (`${this._baseUrl}/cards/${cardId}`, {
      headers: this._headers,
      method: "DELETE"

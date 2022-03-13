@@ -39,10 +39,11 @@ class Card {
     }
     else {
       this._trashButton.remove();
-      }
+    }
 
-    this._likeButton = this._element.querySelector(".element__like-button").addEventListener("click", () => { 
-    this._handleLikesClick(); 
+    this._likeButton = this._element.querySelector(".element__like-button");
+    this._likeButton.addEventListener("click", () => { 
+      this._handleLikesClick(); 
     }); 
 
     this._element.querySelector(".element__image").addEventListener("click", () => 
