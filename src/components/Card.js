@@ -27,23 +27,21 @@ class Card {
   }
 
   _isLiked() {
-    this._likeButton.querySelector(".element__like-button").classList.toggle(".element__like-button_full");
-
-    // return this._likeButton.classList.contains("element__like-button_full");
+    return this._likeButton.classList.contains("element__like-button_full");
   }
 
   _setEventListeners() { 
     this._trashButton = this._element.querySelector(".element__trash-button");
     if (this._ownerId === this._userId) {
-      this._trashButton.addEventListener("click", (evt) => {
-        this._handleTrashClick(evt);
+      this._trashButton.addEventListener("click", () => {
+        this._handleTrashClick();
         });
     }
     else {
       this._trashButton.remove();
     }
 
-    this._likeButton = this._element.querySelector(".element__like-button");
+    this._likeButton = this._element.querySelector(".element__like-button")
     this._likeButton.addEventListener("click", () => { 
       this._handleLikesClick(); 
     }); 
@@ -55,16 +53,15 @@ class Card {
         }) 
     ); 
   } 
-
-  // _handleLikes() {
-  //   this._likeButton.querySelector(".element__like-button").classList.toggle(".element__like-button_full");
-  // }
   
-  // _handleTrash() {
-  //   this._element.remove();
+  _handleLikesClick() { 
+    this._element.querySelector(".element__like-button").classList.toggle("element__like-button_full"); 
+  } 
 
-  //   this.element = null;
-  // }
+  _handleTrashClick() { 
+    this._element.remove(); 
+    this.element = null;
+  }
 
   _updateLikeCount(data) {
     this._likes = data.likes;
@@ -87,7 +84,7 @@ class Card {
 
     this._likeCount = this._element.querySelector(".element__like-count");
     this._setEventListeners();
-    // this._updateLike();
+    this._updateLike();
     this._hideTrashButton();
 
     return this._element;
@@ -98,11 +95,14 @@ class Card {
 
     if (this._likes.length > 0) {
       this._likeButton.classList.add(".element__like-button_full");
-    } else (this._likes.lenght === 0) 
+    } else (this._likes.length === 0) 
     {
       this._likeButton.classList.remove(".element__like-button_full");
     }
   }
+  //   _handleLikes() {
+  //   this._likeButton.querySelector(".element__like-button").classList.toggle(".element__like-button_full");
+  // }
 }
 
 export default Card;

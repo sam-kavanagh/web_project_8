@@ -29,6 +29,8 @@ const api = new Api({
   },
 });
 
+var cardSection;
+
 //UserInfo instance
 const userData = new UserInfo({
   userNameSelector: "#edit-card-name",
@@ -37,20 +39,21 @@ const userData = new UserInfo({
 });
 
 //Section instance
-const cardSection = new Section(
-  {
-    items: null,
-    renderer: (data) => {
-      cardSection.addItem(createNewCard(data));
-    },
-  },
-  ".elements"
-);
 
 Promise.all([api.getUserInfo(), api.getInitialCardList()])
 .then(([userinfo, cards]) => {
   userData.setUserInfo(userinfo);
   
+  const cardSection = new Section(
+    {
+      items: cards,
+      renderer: (data) => {
+        cardSection.addItem(createNewCard(data));
+      },
+    },
+    ".elements"
+  );
+
   cardSection.renderItems(cards);
 })
 .catch((err) => console.error(`Error loading initial info: ${err}`));
@@ -80,8 +83,8 @@ const createNewCard = (data) => {
           .catch((err) => console.error(`Error liking card: ${err}`))
         }
       },
-      handleTrashClick: (evt) => {
-        deleteCardPopup.open(evt, data._id);
+      handleTrashClick: () => {
+        deleteCardPopup.open(data._id);
       },
       userId: userData.getUserId(),
     },
@@ -155,7 +158,7 @@ const deleteCardPopup = new PopupWithForm({
     api
       .deleteCard(cardId)
       .then(() => {
-        card.handleDeleteCard();
+        card.remove();
         deleteCardPopup.close();
       })
       .catch((err) => {

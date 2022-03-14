@@ -1,16 +1,16 @@
 .profile__edit-button_type-avatar {
-  /* background-image: url(../../../images/edit-profile-image-icon.svg); */
-  background-color: transparent;
-  width: 26px;
-  height: 26px;
-  position: absolute;
-  top: 40%;
-  left: 38%;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  margin: 0;
-  padding: 0;
+    background-image: url(../../../../images/edit-profile-image-icon.svg);
+    background-color: transparent;
+    width: 26px;
+    height: 26px;
+    position: absolute;
+    top: 40%;
+    left: 38%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    margin: 0;
+    padding: 0;
 }
 
 .profile__edit-button_type-avatar:hover {
