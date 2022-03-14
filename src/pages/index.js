@@ -47,14 +47,14 @@ const cardSection = new Section(
   ".elements"
 );
 
-  Promise.all([api.getUserInfo(), api.getInitialCardList()])
-  .then(([userinfo, cards]) => {
-    cardSection.items = cards;
-    userData.setUserInfo(userinfo);
-    
-    cardSection.renderItems(cards);
-  })
-  .catch((err) => console.error(`Error loading initial info: ${err}`));
+Promise.all([api.getUserInfo(), api.getInitialCardList()])
+.then(([userinfo, cards]) => {
+  userData.setUserInfo(userinfo);
+  
+  cardSection.renderItems(cards);
+})
+.catch((err) => console.error(`Error loading initial info: ${err}`));
+
 
 //PopupWithImage instance
 const cardPreview = new PopupWithImage("#popup-preview");
@@ -186,15 +186,8 @@ const avatarFormValidator = new FormValidator(
 /*event listeners for page*/
 //edit profile open popup
 editProfileButton.addEventListener("click", (evt) => {
-  const currentUserinfo = userData.getUserInfo();
-  document
-    .querySelector("#name-input")
-    .setAttribute("value", currentUserinfo["name"]);
-  document
-    .querySelector("#description-input")
-    .setAttribute("value", currentUserinfo["about"]);
-
-  profileEditPopup.open(currentUserinfo);
+  cardFormValidator.resetValidation();
+  profileEditPopup.open();
 });
 
 // editProfileButton.addEventListener("click", (evt) => {
@@ -211,16 +204,14 @@ editProfileButton.addEventListener("click", (evt) => {
 
 //new card open popup
 addCardButton.addEventListener("click", (evt) => {
-  newCardPopup.open();
-
   cardFormValidator.resetValidation();
+  newCardPopup.open();
 });
 
 //edit profile image  popup
 profileAvatarButton.addEventListener("click", (evt) => {
-  profileAvatarPopup.open();
-
   avatarFormValidator.resetValidation();
+  profileAvatarPopup.open();
 });
 
 //delete card popup

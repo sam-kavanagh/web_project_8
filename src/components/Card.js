@@ -27,7 +27,9 @@ class Card {
   }
 
   _isLiked() {
-    return this._likeButton.classList.contains("element__like-button_full");
+    this._likeButton.querySelector(".element__like-button").classList.toggle(".element__like-button_full");
+
+    // return this._likeButton.classList.contains("element__like-button_full");
   }
 
   _setEventListeners() { 
