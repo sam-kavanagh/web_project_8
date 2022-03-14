@@ -26,7 +26,7 @@ class UserInfo {
     return this._id;
   }
 
-  setAvatar({ avatar: link }) {
+  setAvatar({ link }) {
     this._userAvatarElement.src = link;
   }
 

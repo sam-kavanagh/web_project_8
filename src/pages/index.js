@@ -37,7 +37,7 @@ const userData = new UserInfo({
 });
 
 
-let cardSection;
+let cardSection = null;
 
 //Section instance
 
