@@ -29,14 +29,15 @@ const api = new Api({
   },
 });
 
-var cardSection;
-
 //UserInfo instance
 const userData = new UserInfo({
   userNameSelector: "#edit-card-name",
   userDescriptionSelector: "#edit-card-description",
   userAvatarSelector: ".profile__image",
 });
+
+
+let cardSection;
 
 //Section instance
 
