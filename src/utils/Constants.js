@@ -33,4 +33,5 @@ export const validationSettings = {
   submitButtonSelector: ".popup__submit-button",
   inactiveButtonClass: "popup__submit-button_disabled",
   cardSection: ".elements",
+  // avatarPopupSelector: 
 };
