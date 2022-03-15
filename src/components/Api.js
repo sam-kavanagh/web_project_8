@@ -67,7 +67,7 @@ class Api {
      body: JSON.stringify({ 
       avatar,
       }),
-    }).then(console.log(this._handleServerResponse));
+    }).then(this._handleServerResponse);
    }
 
 
