@@ -1,4 +1,4 @@
-# Project 6: Around The U.S.
+# Project 9: Around The U.S.
 Around the U.S showcases different states in the U.S.
 
 In this project I've built on project 4 & 5 , further developing my interactive webpage. 
