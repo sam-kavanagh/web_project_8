@@ -85,7 +85,7 @@ class Card {
     this._likeCount = this._element.querySelector(".element__like-count");
     this._setEventListeners();
     this._updateLike();
-    this._hideTrashButton();
+    // this._hideTrashButton();
 
     return this._element;
   }

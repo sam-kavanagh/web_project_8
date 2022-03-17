@@ -70,26 +70,13 @@ const createNewCard = (data) => {
   return card.getView();
 };
 
-//section instance
-const cardSection = new Section(
-  {
-    items: null,
-    renderer: (data) => {
-      cardSection.addItem(createNewCard(data));
-    },
-  },
-  ".elements"
-);
-
 //Section instance
-// Promise.all([]).
-//   then(/* here you do all necessary calculations */)
-//   .then(/* here you render what you need */)
+let cardSection;
 
 Promise.all([api.getUserInfo(), api.getInitialCardList()])
 .then(([userinfo, cards]) => {
   userData.setUserInfo(userinfo);
-  const cardSection = new Section(
+   cardSection = new Section(
     {
       items: cards,
       renderer: (data) => {
@@ -99,7 +86,7 @@ Promise.all([api.getUserInfo(), api.getInitialCardList()])
     ".elements"
   );
 
-  cardSection.renderItems(cards);
+  cardSection.renderItems(cards.reverse());
 })
 .catch((err) => console.error(`Error loading initial info: ${err}`));
 
