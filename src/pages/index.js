@@ -1,7 +1,7 @@
 import "../pages/index.css";
 
 //import all classes
-import { initialCards, validationSettings } from "../utils/constants.js";
+import { validationSettings, selectors } from "../utils/constants.js";
 import { renderLoading } from "../utils/utils.js";
 import Api from "../components/Api.js";
 import Section from "../components/Section";
@@ -44,26 +44,33 @@ const createNewCard = (data) => {
   const card = new Card(
     {
       data,
+      userId: userData.getUserId(),
       handleCardClick: (imgData) => {
-        cardPreview.open(imgData)
+        cardPreview.open(imgData);
       },
-      handleLikesClick: () => {
+      handleLikesClick: (data) => {
         if (card._isLiked()) {
           api
-          .removeLike(data._id)
-          .then((data) => card._updateLike(data))
-          .catch((err) => console.error(`Error liking card: ${err}`))
+            .removeLike({ _id: data._id })
+            .then((data) => card._updateLike(data))
+            .catch((err) => console.error(`Error removing card like: ${err}`));
         } else {
           api
-          .addLike(data._id)
-          .then((data) => card._updateLike(data))
-          .catch((err) => console.error(`Error liking card: ${err}`))
+            .addLike({ _id: data._id })
+            .then((data) => card._updateLike(data))
+            .catch((err) => console.error(`Error liking card: ${err}`));
         }
       },
       handleTrashClick: () => {
-        deleteCardPopup.open(data._id);
+        deleteCardPopup.open(() => {
+          api
+            .deleteCard({ _id: data._id }, card)
+            .then(() => {
+              card._card.removeCard();
+            })
+            .catch((err) => console.error(`Error deleting card: ${err}`));
+        });
       },
-      userId: userData.getUserId(),
     },
     "#card-template"
   );
@@ -74,22 +81,21 @@ const createNewCard = (data) => {
 let cardSection;
 
 Promise.all([api.getUserInfo(), api.getInitialCardList()])
-.then(([userinfo, cards]) => {
-  userData.setUserInfo(userinfo);
-   cardSection = new Section(
-    {
-      items: cards,
-      renderer: (data) => {
-        cardSection.addItem(createNewCard(data));
+  .then(([userinfo, cards]) => {
+    userData.setUserInfo(userinfo);
+    cardSection = new Section(
+      {
+        items: cards,
+        renderer: (data) => {
+          cardSection.addItem(createNewCard(data));
+        },
       },
-    },
-    ".elements"
-  );
+      ".elements"
+    );
 
-  cardSection.renderItems(cards.reverse());
-})
-.catch((err) => console.error(`Error loading initial info: ${err}`));
-
+    cardSection.renderItems(cards.reverse());
+  })
+  .catch((err) => console.error(`Error loading initial info: ${err}`));
 
 //PopupWithForm instance for edit profile popup
 const profileEditPopup = new PopupWithForm({
@@ -109,7 +115,7 @@ const profileEditPopup = new PopupWithForm({
         renderLoading("#edit-profile-popup");
       });
   },
-})
+});
 
 //Edit profile avatar popup window
 const profileAvatarPopup = new PopupWithForm({
@@ -140,7 +146,7 @@ const newCardPopup = new PopupWithForm({
         newCardPopup.close();
       })
       .catch((err) => {
-        console.error(`Error loading new card: ${err}`)
+        console.error(`Error loading new card: ${err}`);
       })
       .finally(() => {
         renderLoading("#add-card-popup");
@@ -151,7 +157,7 @@ const newCardPopup = new PopupWithForm({
 //Delete card instance popup
 const deleteCardPopup = new PopupWithForm({
   popupSelector: "#delete-card-popup",
-  handleFormSubmit: (cardId, card) => {
+  handleDeleteForm: (cardId, card) => {
     renderLoading("#delete-card-popup", true);
     api
       .deleteCard(cardId)
@@ -160,7 +166,7 @@ const deleteCardPopup = new PopupWithForm({
         deleteCardPopup.close();
       })
       .catch((err) => {
-        console.error(`Error loading deleting card: ${err}`)
+        console.error(`Error loading deleting card: ${err}`);
       })
       .finally(() => {
         renderLoading("#delete-card-popup");
@@ -229,5 +235,3 @@ deleteCardPopup.setEventListeners();
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 avatarFormValidator.enableValidation();
-
-

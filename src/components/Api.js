@@ -46,15 +46,15 @@ class Api {
     }).then(this._handleServerResponse);
   }
 
-   addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  addLike({_id}) {
+    return fetch(`${this._baseUrl}/cards/likes/${_id}`, {
       method: "PUT",
       headers: this._headers,
     }).then(this._handleServerResponse);
   }
 
-  removeLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  removeLike({_id}) {
+    return fetch(`${this._baseUrl}/cards/likes/${_id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._handleServerResponse);
@@ -68,11 +68,11 @@ class Api {
       avatar,
       }),
     }).then(this._handleServerResponse);
-   }
+  }
 
 
-  deleteCard(cardId) {
-   return fetch (`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard({_id}) {
+   return fetch (`${this._baseUrl}/cards/${_id}`, {
      headers: this._headers,
      method: "DELETE"
    }).then(this._handleServerResponse);

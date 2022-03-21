@@ -4,13 +4,14 @@ class PopupWithDeleteConfirmation extends Popup {
   constructor({popupSelector}) {
     super(popupSelector);
     
-    this._handleDeleteCard = this._handleDeleteCard;
+    this._handleDeleteForm = this._handleDeleteForm;
   }
   
   //this specifies the card to be deleted
-  open(deleteCard) {
+  open(cardId, card) {
     super.open();
-    this.deleteCard = deleteCard;
+    this._cardId = cardId;
+    this._cardEl = card;
   }
   
   setEventListeners() { 
@@ -18,11 +19,15 @@ class PopupWithDeleteConfirmation extends Popup {
 
     const deleteSubmitButton = document.querySelector("#delete-submit-button");
 
-    deleteSubmitButton.addEventListener("click", () => {
-      this.deleteCard();
-      this.close();
-    });
+    deleteSubmitButton.addEventListener("submit", () => {
+      evt.preventDefault();
+      this._handleDeleteForm(this._cardId, this._cardEl);
+    })
+        //   this.deleteCard();
+    //   this.close();
+    // });
   }
+
 }
 
 export default PopupWithDeleteConfirmation;

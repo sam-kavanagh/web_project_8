@@ -3,7 +3,6 @@ class UserInfo {
     this._userNameElement = document.querySelector(userNameSelector);
     this._userDescriptionElement = document.querySelector(userDescriptionSelector);
     this._userAvatarElement = document.querySelector(userAvatarSelector);
-    this._id = _id;
   }
 
   getUserInfo() {
@@ -11,7 +10,7 @@ class UserInfo {
       name: this._userNameElement.textContent, 
       about: this._userDescriptionElement.textContent.trim(),
       avatar: this._userAvatarElement.style.backgroundImage,
-      _id: this._id,
+      id: this._userId,
     }; 
   } 
 

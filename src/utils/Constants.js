@@ -30,8 +30,14 @@ export const validationSettings = {
   inputSelector: ".popup__input",
   inputTextError: "popup__input_has-error",
   inputVisibleError: "popup__text-error_visible",
-  submitButtonSelector: ".popup__submit-button",
   inactiveButtonClass: "popup__submit-button_disabled",
-  cardSection: ".elements",
-  // avatarPopupSelector: 
 };
+
+export const selectors = {
+  cardSection: ".elements",
+  submitButtonSelector: ".popup__submit-button",
+  profileEditPopupSelector: "#edit-profile-popup",
+  newCardPopupSelector: "#add-card-popup",
+  deleteCardPopupSelector: "#delete-card-popup",
+  profileAvatarPopupSelector: "#profile-avatar-popup",
+}

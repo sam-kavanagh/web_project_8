@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import PopupWithImage from "../components/PopupWithImage.js";
 
 class Card {
@@ -5,8 +6,9 @@ class Card {
     this._text = data.name;
     this._link = data.link;
     this._likes = data.likes;
-    this._cardId = data._id;
+    this._id = data._id;
     this._ownerId = data.ownerId;
+    // this._currentId = currentId;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleLikesClick = handleLikesClick;
@@ -27,23 +29,27 @@ class Card {
   }
 
   _isLiked() {
-    return this._likeButton.classList.contains("element__like-button_full");
+    if (this._likeButton.classList.contains("element__like-button_full")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   _setEventListeners() { 
     this._trashButton = this._element.querySelector(".element__trash-button");
     if (this._ownerId === this._userId) {
       this._trashButton.addEventListener("click", () => {
-        this._handleTrashClick();
+        this._handleTrashClick(this);
         });
     }
     else {
       this._trashButton.remove();
     }
 
-    this._likeButton = this._element.querySelector(".element__like-button")
+    this._likeButton = this._element.querySelector(".element__like-button");
     this._likeButton.addEventListener("click", () => { 
-      this._handleLikesClick(); 
+      this._handleLikesClick(this); 
     }); 
 
     this._element.querySelector(".element__image").addEventListener("click", () => 
@@ -52,13 +58,9 @@ class Card {
         text: this._text, 
         }) 
     ); 
-  } 
+  }   
   
-  _handleLikesClick() { 
-    this._element.querySelector(".element__like-button").classList.toggle("element__like-button_full"); 
-  } 
-
-  _handleTrashClick() { 
+  removeCard() { 
     this._element.remove(); 
     this.element = null;
   }
@@ -76,7 +78,8 @@ class Card {
 
   getView() {
     this._element = this._getTemplate();
-    
+
+    const ownerId = this._ownerId === data._ownerId;
     const cardImage = this._element.querySelector(".element__image");
     cardImage.src = this._link;
     cardImage.alt = this._text; 
@@ -85,19 +88,19 @@ class Card {
     this._likeCount = this._element.querySelector(".element__like-count");
     this._setEventListeners();
     this._updateLike();
-    // this._hideTrashButton();
+    this._hideTrashButton();
+
+    debugger;
 
     return this._element;
   }
 
   _updateLike() {
     this._likeCount.textContent = this._likes.length;
-
-    if (this._likes.length > 0) {
-      this._likeButton.classList.add(".element__like-button_full");
-    } else (this._likes.length === 0) 
-    {
-      this._likeButton.classList.remove(".element__like-button_full");
+    if (this._likes.filter((user) => user._id === this._userId).length > 0) {
+      this._likeButton.classList.add("element__like-button_full");
+    } else {
+      this._likeButton.classList.remove("element__like-button_full");
     }
   }
   //   _handleLikes() {
