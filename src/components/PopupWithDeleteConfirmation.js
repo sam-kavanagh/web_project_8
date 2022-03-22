@@ -5,6 +5,7 @@ class PopupWithDeleteConfirmation extends Popup {
     super(popupSelector);
     
     this._handleDeleteForm = handleDeleteForm;
+    // this._popupForm = this._popupElement.querySelector(".popup__form");
   }
   
   //this specifies the card to be deleted
@@ -19,15 +20,11 @@ class PopupWithDeleteConfirmation extends Popup {
 
     const deleteSubmitButton = document.querySelector("#delete-submit-button");
 
-    deleteSubmitButton.addEventListener("submit", (evt) => {
+    deleteSubmitButton.addEventListener("submit", () => { 
       evt.preventDefault();
       this._handleDeleteForm();
-      // this._handleDeleteForm(this._cardId, this._cardEl);
-
+      this._handleDeleteForm(this._cardId, this._cardEl);
     }) 
-        //   this.deleteCard();
-    //   this.close();
-    // });
   }
 
 }

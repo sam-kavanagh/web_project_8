@@ -164,14 +164,11 @@
     <div class="popup" id="delete-card-popup">
       <div class="popup__container popup__container_type_delete">
         <button type="button" class="popup__close-button"></button>
-        <h3 class="popup__title popup__title_type-delete">Are you sure?</h3>
-        <button
-        type="submit"
-        class="popup__submit-button popup__submit-button_type-delete"
-        id="delete-submit-button"
-      >
-        Yes
-      </button>
+        <form name="form" class="popup__form" id="delete-card-form">
+          <h2 class="popup__title">Are you Sure?</h2>
+          <button type="submit" class="popup__submit-button popup__submit-button_type-delete"
+          id="delete-submit-button">Yes</button>
+        </form>
       </div>
     </div>
     <div class="popup" id="popup-preview">

@@ -37,14 +37,9 @@ class Card {
 
   _setEventListeners() { 
     this._trashButton = this._element.querySelector(".element__trash-button");
-    if (this._ownerId === this._userId) {
-      this._trashButton.addEventListener("click", () => {
-        this._handleTrashClick(this);
-        });
-    }
-    else {
-      this._trashButton.remove();
-    }
+    this._trashButton.addEventListener("click", () => {
+      this._handleTrashClick(this);
+    });
 
     this._likeButton = this._element.querySelector(".element__like-button");
     this._likeButton.addEventListener("click", () => { 
@@ -69,11 +64,17 @@ class Card {
     this._updateLike();
   }
 
-  _hideTrashButton() {
-    if (this._ownerId != this._userId) {
-      this._trashButton.remove();
-    }
-  }
+  // _hideTrashButton() {
+  //   if (this._userId === this._ownerId) {
+  //     this._trashButton.style.vilibility = "visible";
+  //   } else {
+  //     this._trashButton.style.visibility = "hidden";
+  //   }
+  // }
+  //   if (this._ownerId != this._userId) {
+  //     this._trashButton.remove();
+  //   }
+  // }
 
   getView() {
     this._element = this._getTemplate();
@@ -86,23 +87,24 @@ class Card {
     this._likeCount = this._element.querySelector(".element__like-count");
     this._setEventListeners();
     this._updateLike();
-    this._hideTrashButton();
+    // this._hideTrashButton();
 
     return this._element;
   }
 
-  _updateLike() {
-    this._likeCount.textContent = this._likes.length;
+  _updateLike(update) {
+    if (update) {
+      this._likeCount.textContent = update.likes.length;
 
-    if (this._likes.find((data) => data._id === this._userId)) {
-      this._likeButton.classList.add("element__like-button_full");
+      if (update.likes.find((data) => data._id === this._userId)) {
+        this._likeButton.classList.add("element__like-button_full");
+      } else {
+        this._likeButton.classList.remove("element__like-button_full");
+      }
     } else {
-      this._likeButton.classList.remove("element__like-button_full");
+      this._likeCount.textContent = this._likes.length;
     }
   }
-  //   _handleLikes() {
-  //   this._likeButton.querySelector(".element__like-button").classList.toggle(".element__like-button_full");
-  // }
 
   getId() {
     return this._cardId;

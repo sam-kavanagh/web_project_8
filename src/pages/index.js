@@ -65,14 +65,7 @@ const createNewCard = (data) => {
         }
       },
       handleTrashClick: (card) => {
-        deleteCardPopup.open(() => {
-          api
-            .deleteCard({ _id: data._id })
-            .then(() => {
-              card._card.removeCard();
-            })
-            .catch((err) => console.error(`Error deleting card: ${err}`));
-        });
+        deleteCardPopup.open(card.getId())
       },
     },
     "#card-template"
@@ -165,11 +158,11 @@ const deleteCardPopup = new PopupWithDeleteConfirmation({
     api
       .deleteCard(cardId)
       .then(() => {
-        card.remove();
+        card.removeCard();
         deleteCardPopup.close();
       })
       .catch((err) => {
-        console.error(`Error loading deleting card: ${err}`);
+        console.error(`Error deleting card: ${err}`);
       })
       .finally(() => {
         renderLoading("#delete-card-popup");
