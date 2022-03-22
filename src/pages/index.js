@@ -55,8 +55,9 @@ const createNewCard = (data) => {
         if (card.isLiked()) {
           api
             .removeLike(card.getId())
-            .then((data) => card._updateLike(data))
+            .then((data) => card.updateLike(data))
             .catch((err) => console.error(`Error removing card like: ${err}`));
+            debugger;
         } else {
           api
             .addLike(card.getId())
@@ -200,17 +201,17 @@ editProfileButton.addEventListener("click", (evt) => {
   profileEditPopup.open();
 });
 
-// editProfileButton.addEventListener("click", (evt) => {
-//   const currentUserinfo = userData.getUserInfo();
-//   document
-//     .querySelector("#name-input")
-//     .setAttribute("value", currentUserinfo["name"]);
-//   document
-//     .querySelector("#description-input")
-//     .setAttribute("value", currentUserinfo["about"]);
+editProfileButton.addEventListener("click", (evt) => {
+  const currentUserinfo = userData.getUserInfo();
+  document
+    .querySelector("#name-input")
+    .setAttribute("value", currentUserinfo["name"]);
+  document
+    .querySelector("#description-input")
+    .setAttribute("value", currentUserinfo["about"]);
 
-//   profileEditPopup.open(currentUserinfo);
-// });
+  profileEditPopup.open(currentUserinfo);
+});
 
 //new card open popup
 addCardButton.addEventListener("click", (evt) => {
