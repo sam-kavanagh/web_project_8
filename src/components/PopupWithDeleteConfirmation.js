@@ -1,10 +1,10 @@
 import Popup from "../components/Popup.js";
 
 class PopupWithDeleteConfirmation extends Popup {
-  constructor({popupSelector}) {
+  constructor({popupSelector, handleDeleteForm}) {
     super(popupSelector);
     
-    this._handleDeleteForm = this._handleDeleteForm;
+    this._handleDeleteForm = handleDeleteForm;
   }
   
   //this specifies the card to be deleted
@@ -19,10 +19,12 @@ class PopupWithDeleteConfirmation extends Popup {
 
     const deleteSubmitButton = document.querySelector("#delete-submit-button");
 
-    deleteSubmitButton.addEventListener("submit", () => {
+    deleteSubmitButton.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._handleDeleteForm(this._cardId, this._cardEl);
-    })
+      this._handleDeleteForm();
+      // this._handleDeleteForm(this._cardId, this._cardEl);
+
+    }) 
         //   this.deleteCard();
     //   this.close();
     // });

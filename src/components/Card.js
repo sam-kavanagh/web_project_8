@@ -6,9 +6,8 @@ class Card {
     this._text = data.name;
     this._link = data.link;
     this._likes = data.likes;
-    this._id = data._id;
+    this._cardId = data._id;
     this._ownerId = data.ownerId;
-    // this._currentId = currentId;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleLikesClick = handleLikesClick;
@@ -28,7 +27,7 @@ class Card {
     return cardElement;
   }
 
-  _isLiked() {
+  isLiked() {
     if (this._likeButton.classList.contains("element__like-button_full")) {
       return true;
     } else {
@@ -79,7 +78,6 @@ class Card {
   getView() {
     this._element = this._getTemplate();
 
-    const ownerId = this._ownerId === data._ownerId;
     const cardImage = this._element.querySelector(".element__image");
     cardImage.src = this._link;
     cardImage.alt = this._text; 
@@ -90,14 +88,13 @@ class Card {
     this._updateLike();
     this._hideTrashButton();
 
-    debugger;
-
     return this._element;
   }
 
   _updateLike() {
     this._likeCount.textContent = this._likes.length;
-    if (this._likes.filter((user) => user._id === this._userId).length > 0) {
+
+    if (this._likes.find((data) => data._id === this._userId)) {
       this._likeButton.classList.add("element__like-button_full");
     } else {
       this._likeButton.classList.remove("element__like-button_full");
@@ -106,6 +103,10 @@ class Card {
   //   _handleLikes() {
   //   this._likeButton.querySelector(".element__like-button").classList.toggle(".element__like-button_full");
   // }
+
+  getId() {
+    return this._cardId;
+  }
 }
 
 export default Card;

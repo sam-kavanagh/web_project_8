@@ -1,4 +1,6 @@
 import "../pages/index.css";
+import "regenerator-runtime/runtime";
+import "core-js/stable";
 
 //import all classes
 import { validationSettings, selectors } from "../utils/constants.js";
@@ -40,6 +42,7 @@ const userData = new UserInfo({
 const cardPreview = new PopupWithImage("#popup-preview");
 
 //Card instance
+
 const createNewCard = (data) => {
   const card = new Card(
     {
@@ -48,23 +51,23 @@ const createNewCard = (data) => {
       handleCardClick: (imgData) => {
         cardPreview.open(imgData);
       },
-      handleLikesClick: (data) => {
-        if (card._isLiked()) {
+      handleLikesClick: (card) => {
+        if (card.isLiked()) {
           api
-            .removeLike({ _id: data._id })
+            .removeLike(card.getId())
             .then((data) => card._updateLike(data))
             .catch((err) => console.error(`Error removing card like: ${err}`));
         } else {
           api
-            .addLike({ _id: data._id })
+            .addLike(card.getId())
             .then((data) => card._updateLike(data))
             .catch((err) => console.error(`Error liking card: ${err}`));
         }
       },
-      handleTrashClick: () => {
+      handleTrashClick: (card) => {
         deleteCardPopup.open(() => {
           api
-            .deleteCard({ _id: data._id }, card)
+            .deleteCard({_id: data._id})
             .then(() => {
               card._card.removeCard();
             })
@@ -155,7 +158,7 @@ const newCardPopup = new PopupWithForm({
 });
 
 //Delete card instance popup
-const deleteCardPopup = new PopupWithForm({
+const deleteCardPopup = new PopupWithDeleteConfirmation({
   popupSelector: "#delete-card-popup",
   handleDeleteForm: (cardId, card) => {
     renderLoading("#delete-card-popup", true);

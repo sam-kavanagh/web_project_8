@@ -31,11 +31,11 @@ export const validationSettings = {
   inputTextError: "popup__input_has-error",
   inputVisibleError: "popup__text-error_visible",
   inactiveButtonClass: "popup__submit-button_disabled",
+  cardSection: ".elements",
+  submitButtonSelector: ".popup__submit-button",
 };
 
 export const selectors = {
-  cardSection: ".elements",
-  submitButtonSelector: ".popup__submit-button",
   profileEditPopupSelector: "#edit-profile-popup",
   newCardPopupSelector: "#add-card-popup",
   deleteCardPopupSelector: "#delete-card-popup",
