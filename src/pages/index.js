@@ -55,9 +55,8 @@ const createNewCard = (data) => {
         if (card.isLiked()) {
           api
             .removeLike(card.getId())
-            .then((data) => card.updateLike(data))
+            .then((data) => card._updateLike(data))
             .catch((err) => console.error(`Error removing card like: ${err}`));
-            debugger;
         } else {
           api
             .addLike(card.getId())
@@ -68,7 +67,7 @@ const createNewCard = (data) => {
       handleTrashClick: (card) => {
         deleteCardPopup.open(() => {
           api
-            .deleteCard({_id: data._id})
+            .deleteCard({ _id: data._id })
             .then(() => {
               card._card.removeCard();
             })
