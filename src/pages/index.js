@@ -209,7 +209,7 @@ formValidators[ profileForm.getAttribute('popup__form') ].resetValidation()
 /*event listeners for page*/
 //edit profile open popup
 editProfileButton.addEventListener("click", (evt) => {
-  cardFormValidator.resetValidation();
+  // cardFormValidator.resetValidation();
   profileEditPopup.open();
 });
 
@@ -223,13 +223,13 @@ editProfileButton.addEventListener("click", (evt) => {
 
 //new card open popup
 addCardButton.addEventListener("click", (evt) => {
-  cardFormValidator.resetValidation();
+  // cardFormValidator.resetValidation();
   newCardPopup.open();
 });
 
 //edit profile image  popup
 profileAvatarButton.addEventListener("click", (evt) => {
-  avatarFormValidator.resetValidation();
+  // avatarFormValidator.resetValidation();
   profileAvatarPopup.open();
 });
 
@@ -240,7 +240,7 @@ profileEditPopup.setEventListeners();
 profileAvatarPopup.setEventListeners();
 newCardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();
-editFormValidator.enableValidation();
-cardFormValidator.enableValidation();
-avatarFormValidator.enableValidation();
+// editFormValidator.enableValidation();
+// cardFormValidator.enableValidation();
+// avatarFormValidator.enableValidation();
 
