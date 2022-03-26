@@ -17,9 +17,9 @@ import FormValidator from "../components/FormValidator.js";
 //Buttons
 const editProfileButton = document.querySelector(".profile__edit-button");
 const profileAvatarButton = document.querySelector("#profile-avatar-button");
-const deleteCardButton = document.querySelector("#delete-submit-button");
 const addCardButton = document.querySelector(".profile__add-button");
-
+const nameInput = document.querySelector("#name-input");
+const descriptionInput = document.querySelector("#description-input");
 /*create instances of the classes */
 
 //Api instance
@@ -65,7 +65,7 @@ const createNewCard = (data) => {
         }
       },
       handleTrashClick: (card) => {
-        deleteCardPopup.open(card.getId())
+        deleteCardPopup.open(card.getId(), card)
       },
     },
     "#card-template"
@@ -77,8 +77,8 @@ const createNewCard = (data) => {
 let cardSection;
 
 Promise.all([api.getUserInfo(), api.getInitialCardList()])
-  .then(([userinfo, cards]) => {
-    userData.setUserInfo(userinfo);
+  .then(([userInfo, cards]) => {
+    userData.setUserInfo(userInfo);
     cardSection = new Section(
       {
         items: cards,
@@ -89,7 +89,7 @@ Promise.all([api.getUserInfo(), api.getInitialCardList()])
       ".elements"
     );
 
-    cardSection.renderItems(cards.reverse());
+    cardSection.renderItems();
   })
   .catch((err) => console.error(`Error loading initial info: ${err}`));
 
@@ -121,7 +121,7 @@ const profileAvatarPopup = new PopupWithForm({
     api
       .setUserAvatar(data)
       .then((avatarData) => {
-        userData.setAvatar(avatarData);
+        userData.setUserInfo(avatarData);
         profileAvatarPopup.close();
       })
       .finally(() => {
@@ -171,20 +171,40 @@ const deleteCardPopup = new PopupWithDeleteConfirmation({
 });
 
 ///FormValidator instance
-const editFormValidator = new FormValidator(
-  validationSettings,
-  document.querySelector("#edit-profile-form")
-);
+const formValidators = {}
 
-const cardFormValidator = new FormValidator(
-  validationSettings,
-  document.querySelector("#new-card-form")
-);
+// enable validation
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, config)
+    // here you get the name of the form
+    const formName = formElement.getAttribute('popup__form')
 
-const avatarFormValidator = new FormValidator(
-  validationSettings,
-  document.querySelector("#profile-avatar-form")
-);
+   // here you store a validator by the `name` of the form
+    formValidators[formName] = validator;
+   validator.enableValidation();
+  });
+};
+
+enableValidation(config);
+formValidators[ profileForm.getAttribute('popup__form') ].resetValidation()
+
+
+// const editFormValidator = new FormValidator(
+//   validationSettings,
+//   document.querySelector("#edit-profile-form")
+// );
+
+// const cardFormValidator = new FormValidator(
+//   validationSettings,
+//   document.querySelector("#new-card-form")
+// );
+
+// const avatarFormValidator = new FormValidator(
+//   validationSettings,
+//   document.querySelector("#profile-avatar-form")
+// );
 
 /*event listeners for page*/
 //edit profile open popup
@@ -195,14 +215,10 @@ editProfileButton.addEventListener("click", (evt) => {
 
 editProfileButton.addEventListener("click", (evt) => {
   const currentUserinfo = userData.getUserInfo();
-  document
-    .querySelector("#name-input")
-    .setAttribute("value", currentUserinfo["name"]);
-  document
-    .querySelector("#description-input")
-    .setAttribute("value", currentUserinfo["about"]);
+  nameInput.setAttribute("value", currentUserinfo["name"]);
+  descriptionInput.setAttribute("value", currentUserinfo["about"]);
 
-  profileEditPopup.open(currentUserinfo);
+  profileEditPopup.open();
 });
 
 //new card open popup
@@ -217,10 +233,6 @@ profileAvatarButton.addEventListener("click", (evt) => {
   profileAvatarPopup.open();
 });
 
-//delete card popup
-deleteCardButton.addEventListener("click", (evt) => {
-  deleteCardPopup.open();
-});
 
 //initialize all my instances
 cardPreview.setEventListeners();
@@ -231,3 +243,4 @@ deleteCardPopup.setEventListeners();
 editFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 avatarFormValidator.enableValidation();
+

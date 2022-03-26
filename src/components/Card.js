@@ -1,13 +1,10 @@
-import { data } from "autoprefixer";
-import PopupWithImage from "../components/PopupWithImage.js";
-
 class Card {
   constructor({ data, userId, handleCardClick, handleLikesClick, handleTrashClick }, cardSelector) {
     this._text = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._cardId = data._id;
-    this._ownerId = data.ownerId;
+    this._ownerId = data.owner._id;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleLikesClick = handleLikesClick;
@@ -64,15 +61,22 @@ class Card {
     this._updateLike();
   }
 
-  // _hideTrashButton() {
+  _hideTrashButton() {
+    if (this._userId === this._ownerId) {
+      this._trashButton.style.vilibility = "visible";
+    } else {
+      this._trashButton.style.visibility = "hidden";
+    }
+  }
+
+// if (this._ownerId != this._userId) {
+//   this._trashButton.remove();
+// }
+  // _removeCard () {
   //   if (this._userId === this._ownerId) {
-  //     this._trashButton.style.vilibility = "visible";
+  //     this._trashButton.classList.add(".element__trash-button");
   //   } else {
-  //     this._trashButton.style.visibility = "hidden";
-  //   }
-  // }
-  //   if (this._ownerId != this._userId) {
-  //     this._trashButton.remove();
+  //     this._trashButton.classList.remove(".element__trash-button");
   //   }
   // }
 
@@ -87,7 +91,8 @@ class Card {
     this._likeCount = this._element.querySelector(".element__like-count");
     this._setEventListeners();
     this._updateLike();
-    // this._hideTrashButton();
+    // this._removeCard();
+    this._hideTrashButton();
 
     return this._element;
   }
