@@ -3,7 +3,7 @@ import "regenerator-runtime/runtime";
 import "core-js/stable";
 
 //import all classes
-import { validationSettings, selectors } from "../utils/constants.js";
+import { config } from "../utils/constants.js";
 import { renderLoading } from "../utils/utils.js";
 import Api from "../components/Api.js";
 import Section from "../components/Section";
@@ -65,7 +65,7 @@ const createNewCard = (data) => {
         }
       },
       handleTrashClick: (card) => {
-        deleteCardPopup.open(card.getId(), card)
+        deleteCardPopup.open(card.getId(), card);
       },
     },
     "#card-template"
@@ -175,41 +175,23 @@ const formValidators = {}
 
 // enable validation
 const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector))
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(formElement, config)
-    // here you get the name of the form
-    const formName = formElement.getAttribute('popup__form')
-
-   // here you store a validator by the `name` of the form
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formEl) => {
+    const validator = new FormValidator(config, formEl);
+    const formName = formEl.getAttribute("name");
     formValidators[formName] = validator;
-   validator.enableValidation();
+    validator.enableValidation();
   });
 };
 
 enableValidation(config);
-formValidators[ profileForm.getAttribute('popup__form') ].resetValidation()
 
-
-// const editFormValidator = new FormValidator(
-//   validationSettings,
-//   document.querySelector("#edit-profile-form")
-// );
-
-// const cardFormValidator = new FormValidator(
-//   validationSettings,
-//   document.querySelector("#new-card-form")
-// );
-
-// const avatarFormValidator = new FormValidator(
-//   validationSettings,
-//   document.querySelector("#profile-avatar-form")
-// );
+formValidators["form"].resetValidation();
 
 /*event listeners for page*/
+
 //edit profile open popup
 editProfileButton.addEventListener("click", (evt) => {
-  // cardFormValidator.resetValidation();
   profileEditPopup.open();
 });
 
@@ -223,16 +205,13 @@ editProfileButton.addEventListener("click", (evt) => {
 
 //new card open popup
 addCardButton.addEventListener("click", (evt) => {
-  // cardFormValidator.resetValidation();
   newCardPopup.open();
 });
 
 //edit profile image  popup
 profileAvatarButton.addEventListener("click", (evt) => {
-  // avatarFormValidator.resetValidation();
   profileAvatarPopup.open();
 });
-
 
 //initialize all my instances
 cardPreview.setEventListeners();
@@ -240,7 +219,3 @@ profileEditPopup.setEventListeners();
 profileAvatarPopup.setEventListeners();
 newCardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();
-// editFormValidator.enableValidation();
-// cardFormValidator.enableValidation();
-// avatarFormValidator.enableValidation();
-

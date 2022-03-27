@@ -25,7 +25,7 @@ export const initialCards = [
   },
 ];
 
-export const validationSettings = {
+export const config = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   inputTextError: "popup__input_has-error",
@@ -40,4 +40,4 @@ export const selectors = {
   newCardPopupSelector: "#add-card-popup",
   deleteCardPopupSelector: "#delete-card-popup",
   profileAvatarPopupSelector: "#profile-avatar-popup",
-}
+};
