@@ -3,8 +3,8 @@ import "regenerator-runtime/runtime";
 import "core-js/stable";
 
 //import all classes
-import { config } from "../utils/constants.js";
-import { renderLoading } from "../utils/utils.js";
+import { config, selectors } from "../utils/constants.js";
+// import { renderLoading } from "../utils/utils.js";
 import Api from "../components/Api.js";
 import Section from "../components/Section";
 import Card from "../components/Card.js";
@@ -55,12 +55,12 @@ const createNewCard = (data) => {
         if (card.isLiked()) {
           api
             .removeLike(card.getId())
-            .then((data) => card._updateLike(data))
+            .then((data) => card.updateLike(data))
             .catch((err) => console.error(`Error removing card like: ${err}`));
         } else {
           api
             .addLike(card.getId())
-            .then((data) => card._updateLike(data))
+            .then((data) => card.updateLike(data))
             .catch((err) => console.error(`Error liking card: ${err}`));
         }
       },
@@ -93,11 +93,21 @@ Promise.all([api.getUserInfo(), api.getInitialCardList()])
   })
   .catch((err) => console.error(`Error loading initial info: ${err}`));
 
+//Render loading (approach fixes text onclick change issues)
+function renderLoading(loading, popupSelector, text) {
+  const popup = document.querySelector(popupSelector);
+  if (loading) {
+    popup.querySelector(".popup__submit-button").textContent = text;
+  } else {
+    popup.querySelector(".popup__submit-button").textContent = text;
+  }
+}
+
 //PopupWithForm instance for edit profile popup
 const profileEditPopup = new PopupWithForm({
   popupSelector: "#edit-profile-popup",
   handleFormSubmit: (data) => {
-    renderLoading("#edit-profile-popup", true);
+    renderLoading(true, "#edit-profile-popup", "Saving...")
     api
       .patchUserInfo(data)
       .then((profileData) => {
@@ -107,9 +117,9 @@ const profileEditPopup = new PopupWithForm({
       .catch((err) => {
         console.error(`Error loading edit profile: ${err}`);
       })
-      .finally(() => {
-        renderLoading("#edit-profile-popup");
-      });
+      .finally(() => { 
+        renderLoading(false ,"#edit-profile-popup", "Save"); 
+      }); 
   },
 });
 
@@ -117,16 +127,16 @@ const profileEditPopup = new PopupWithForm({
 const profileAvatarPopup = new PopupWithForm({
   popupSelector: "#profile-avatar-popup",
   handleFormSubmit: (data) => {
-    renderLoading("#profile-avatar-popup", true);
+    renderLoading(true, "#profile-avatar-popup", "Saving...");
     api
       .setUserAvatar(data)
       .then((avatarData) => {
         userData.setUserInfo(avatarData);
         profileAvatarPopup.close();
       })
-      .finally(() => {
-        renderLoading("#profile-avatar-popup");
-      });
+      .finally(() => { 
+        renderLoading(false, "#profile-avatar-popup", "Save");     
+      }); 
   },
 });
 
@@ -134,7 +144,7 @@ const profileAvatarPopup = new PopupWithForm({
 const newCardPopup = new PopupWithForm({
   popupSelector: "#add-card-popup",
   handleFormSubmit: (data) => {
-    renderLoading("#add-card-popup", true);
+    renderLoading(true, "#add-card-popup", "Saving..."); 
     api
       .addCard(data)
       .then((cardData) => {
@@ -144,8 +154,8 @@ const newCardPopup = new PopupWithForm({
       .catch((err) => {
         console.error(`Error loading new card: ${err}`);
       })
-      .finally(() => {
-        renderLoading("#add-card-popup");
+      .finally(() => { 
+        renderLoading(false, "#add-card-popup", "Create"); 
       });
   },
 });
@@ -154,7 +164,7 @@ const newCardPopup = new PopupWithForm({
 const deleteCardPopup = new PopupWithDeleteConfirmation({
   popupSelector: "#delete-card-popup",
   handleDeleteForm: (cardId, card) => {
-    renderLoading("#delete-card-popup", true);
+    renderLoading(true, "#delete-card-popup", "Saving..."); 
     api
       .deleteCard(cardId)
       .then(() => {
@@ -164,8 +174,8 @@ const deleteCardPopup = new PopupWithDeleteConfirmation({
       .catch((err) => {
         console.error(`Error deleting card: ${err}`);
       })
-      .finally(() => {
-        renderLoading("#delete-card-popup");
+      .finally(() => { 
+        renderLoading(false,"#delete-card-popup", "Yes"); 
       });
   },
 });
@@ -183,33 +193,28 @@ const enableValidation = (config) => {
     validator.enableValidation();
   });
 };
-
 enableValidation(config);
-
-formValidators["form"].resetValidation();
 
 /*event listeners for page*/
 
-//edit profile open popup
-editProfileButton.addEventListener("click", (evt) => {
-  profileEditPopup.open();
-});
-
-editProfileButton.addEventListener("click", (evt) => {
+editProfileButton.addEventListener("click", () => {
   const currentUserinfo = userData.getUserInfo();
   nameInput.setAttribute("value", currentUserinfo["name"]);
   descriptionInput.setAttribute("value", currentUserinfo["about"]);
 
+  formValidators["profile-form"].resetValidation();
   profileEditPopup.open();
 });
 
 //new card open popup
-addCardButton.addEventListener("click", (evt) => {
+addCardButton.addEventListener("click", () => {
+  formValidators["add-card-form"].resetValidation();
   newCardPopup.open();
 });
 
 //edit profile image  popup
-profileAvatarButton.addEventListener("click", (evt) => {
+profileAvatarButton.addEventListener("click", () => {
+  formValidators["avatar-form"].resetValidation();
   profileAvatarPopup.open();
 });
 
